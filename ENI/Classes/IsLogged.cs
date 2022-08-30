@@ -20,8 +20,19 @@ namespace ENI
 
             if (loggedUser == null)
             {
-                CheckCookie();
+                string url_to_redirect = this.Context.Request.FilePath;
+                Response.Redirect("~/login?page=" + url_to_redirect);
             }
+        }
+
+        public static string GetUrlToRedirect()
+        {
+            string urlToRedirect = (string)HttpContext.Current.Session[Constants.LoginSession.PAGE_URL_TO_REDIRECT];
+            
+            if (string.IsNullOrEmpty(urlToRedirect))
+                urlToRedirect = "/home";
+
+            return urlToRedirect;
         }
 
         private void CheckCookie()

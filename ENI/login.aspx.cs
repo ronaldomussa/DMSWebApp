@@ -20,7 +20,8 @@ namespace ENI
             if (loggedUser != null)
             {
                 IsLogged.SetSessionAndCookie(loggedUser);
-                Response.Redirect("~/home", true);
+                string url_to_redirect = Request.QueryString["page"];
+                Response.Redirect(url_to_redirect, true);
             }
             
             ClientScript.RegisterStartupScript(GetType(), "Erro", "Swal.fire('Ops!','Email ou Senha incorretos.', 'error');", true);

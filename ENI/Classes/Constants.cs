@@ -2,8 +2,9 @@
 {
     public class LoginSession
     {
-        public const string LOGIN_SESSION = "LOGINSESSION";
-        public const string LOGIN_COOKIE  = "LOGINCOOKIE";
+        public const string LOGIN_SESSION = "LOGIN_SESSION";
+        public const string LOGIN_COOKIE  = "LOGIN_COOKIE";
+        public const string PAGE_URL_TO_REDIRECT = "PAGE_URL_TO_REDIRECT";
     }
 
     public class SMTPSetup

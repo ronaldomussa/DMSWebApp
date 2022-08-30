@@ -1,0 +1,539 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="eniModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="display">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" />
+          <Property Name="token" Type="varchar" MaxLength="30" />
+          <Property Name="location" Type="varchar" MaxLength="60" />
+          <Property Name="orientation" Type="int" />
+          <Property Name="display_size" Type="varchar" MaxLength="15" />
+          <Property Name="timetable" Type="text" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="last_activity_date" Type="datetime" Precision="0" />
+          <Property Name="created_by" Type="varchar" MaxLength="45" />
+          <Property Name="created_date" Type="datetime" Precision="0" />
+          <Property Name="last_modified_date" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="media">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="30" />
+          <Property Name="media_type" Type="int" />
+          <Property Name="timing" Type="int" />
+          <Property Name="media_url" Type="varchar" MaxLength="120" />
+          <Property Name="start_date" Type="datetime" Precision="0" />
+          <Property Name="end_date" Type="datetime" Precision="0" />
+          <Property Name="insertions_limit" Type="int" />
+          <Property Name="expose_at_all" Type="bit" />
+          <Property Name="expose_in_groups" Type="varchar" MaxLength="150" />
+          <Property Name="expose_in" Type="varchar" MaxLength="150" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
+          <Property Name="created_by" Type="varchar" MaxLength="45" />
+          <Property Name="created_date" Type="datetime" Precision="0" />
+          <Property Name="last_modified_date" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="modules">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" />
+          <Property Name="description" Type="tinytext" />
+          <Property Name="is_active" Type="bit" />
+        </EntityType>
+        <EntityType Name="report">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="display_id" Type="int" />
+          <Property Name="media_id" Type="int" />
+          <Property Name="insetions_counted" Type="int" />
+          <Property Name="date_start" Type="datetime" Precision="0" />
+          <Property Name="date_end" Type="datetime" Precision="0" />
+          <Property Name="date_created" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="user_role_id" Type="int" />
+          <Property Name="name" Type="varchar" MaxLength="30" />
+          <Property Name="user_picture_url" Type="varchar" MaxLength="120" />
+          <Property Name="email" Type="varchar" MaxLength="150" />
+          <Property Name="password" Type="varchar" MaxLength="45" />
+          <Property Name="phone" Type="varchar" MaxLength="20" />
+          <Property Name="token" Type="varchar" MaxLength="45" />
+          <Property Name="token_expiration_date" Type="datetime" Precision="0" />
+          <Property Name="created_by" Type="varchar" MaxLength="30" />
+          <Property Name="created_date" Type="datetime" Precision="0" />
+          <Property Name="last_modified_date" Type="datetime" Precision="0" />
+          <Property Name="is_active" Type="bit" />
+          <Property Name="is_super_user" Type="bit" />
+        </EntityType>
+        <EntityType Name="user_role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="20" />
+          <Property Name="is_active" Type="bit" />
+          <Property Name="created_by" Type="varchar" MaxLength="45" />
+          <Property Name="created_date" Type="datetime" Precision="0" />
+        </EntityType>
+        <EntityType Name="user_role_permission">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_role_id" Type="int" Nullable="false" />
+          <Property Name="module_id" Type="int" Nullable="false" />
+          <Property Name="can_read" Type="bit" />
+          <Property Name="can_write" Type="bit" />
+          <Property Name="can_delete" Type="bit" />
+          <Property Name="is_active" Type="bit" />
+          <Property Name="created_by" Type="varchar" MaxLength="45" />
+          <Property Name="created_date" Type="datetime" Precision="0" />
+        </EntityType>
+        <Association Name="permission_module">
+          <End Role="modules" Type="Self.modules" Multiplicity="1" />
+          <End Role="user_role_permission" Type="Self.user_role_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modules">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_role_permission">
+              <PropertyRef Name="module_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="report_display">
+          <End Role="display" Type="Self.display" Multiplicity="0..1" />
+          <End Role="report" Type="Self.report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="display">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="report">
+              <PropertyRef Name="display_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="report_media">
+          <End Role="media" Type="Self.media" Multiplicity="0..1" />
+          <End Role="report" Type="Self.report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="report">
+              <PropertyRef Name="media_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="role_permission">
+          <End Role="user_role" Type="Self.user_role" Multiplicity="1" />
+          <End Role="user_role_permission" Type="Self.user_role_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_role_permission">
+              <PropertyRef Name="user_role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_role1">
+          <End Role="user_role" Type="Self.user_role" Multiplicity="0..1" />
+          <End Role="user" Type="Self.user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="user_role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="eniModelStoreContainer">
+          <EntitySet Name="display" EntityType="Self.display" Schema="dms" store:Type="Tables" />
+          <EntitySet Name="media" EntityType="Self.media" Schema="dms" store:Type="Tables" />
+          <EntitySet Name="modules" EntityType="Self.modules" Schema="dms" store:Type="Tables" />
+          <EntitySet Name="report" EntityType="Self.report" Schema="dms" store:Type="Tables" />
+          <EntitySet Name="user" EntityType="Self.user" Schema="dms" store:Type="Tables" />
+          <EntitySet Name="user_role" EntityType="Self.user_role" Schema="dms" store:Type="Tables" />
+          <EntitySet Name="user_role_permission" EntityType="Self.user_role_permission" Schema="dms" store:Type="Tables" />
+          <AssociationSet Name="permission_module" Association="Self.permission_module">
+            <End Role="modules" EntitySet="modules" />
+            <End Role="user_role_permission" EntitySet="user_role_permission" />
+          </AssociationSet>
+          <AssociationSet Name="report_display" Association="Self.report_display">
+            <End Role="display" EntitySet="display" />
+            <End Role="report" EntitySet="report" />
+          </AssociationSet>
+          <AssociationSet Name="report_media" Association="Self.report_media">
+            <End Role="media" EntitySet="media" />
+            <End Role="report" EntitySet="report" />
+          </AssociationSet>
+          <AssociationSet Name="role_permission" Association="Self.role_permission">
+            <End Role="user_role" EntitySet="user_role" />
+            <End Role="user_role_permission" EntitySet="user_role_permission" />
+          </AssociationSet>
+          <AssociationSet Name="user_role1" Association="Self.user_role1">
+            <End Role="user_role" EntitySet="user_role" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="eniModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="eniEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="display" EntityType="eniModel.display" />
+          <EntitySet Name="media" EntityType="eniModel.media" />
+          <EntitySet Name="modules" EntityType="eniModel.modules" />
+          <EntitySet Name="report" EntityType="eniModel.report" />
+          <EntitySet Name="user" EntityType="eniModel.user" />
+          <EntitySet Name="user_role" EntityType="eniModel.user_role" />
+          <EntitySet Name="user_role_permission" EntityType="eniModel.user_role_permission" />
+          <AssociationSet Name="report_display" Association="eniModel.report_display">
+            <End Role="display" EntitySet="display" />
+            <End Role="report" EntitySet="report" />
+          </AssociationSet>
+          <AssociationSet Name="report_media" Association="eniModel.report_media">
+            <End Role="media" EntitySet="media" />
+            <End Role="report" EntitySet="report" />
+          </AssociationSet>
+          <AssociationSet Name="permission_module" Association="eniModel.permission_module">
+            <End Role="modules" EntitySet="modules" />
+            <End Role="user_role_permission" EntitySet="user_role_permission" />
+          </AssociationSet>
+          <AssociationSet Name="user_role1" Association="eniModel.user_role1">
+            <End Role="user_role" EntitySet="user_role" />
+            <End Role="user" EntitySet="user" />
+          </AssociationSet>
+          <AssociationSet Name="role_permission" Association="eniModel.role_permission">
+            <End Role="user_role" EntitySet="user_role" />
+            <End Role="user_role_permission" EntitySet="user_role_permission" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="display">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="token" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="location" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="orientation" Type="Int32" />
+          <Property Name="display_size" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="timetable" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="last_activity_date" Type="DateTime" />
+          <Property Name="created_by" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" />
+          <Property Name="last_modified_date" Type="DateTime" />
+          <NavigationProperty Name="report" Relationship="eniModel.report_display" FromRole="display" ToRole="report" />
+        </EntityType>
+        <EntityType Name="media">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="media_type" Type="Int32" />
+          <Property Name="timing" Type="Int32" />
+          <Property Name="media_url" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="start_date" Type="DateTime" />
+          <Property Name="end_date" Type="DateTime" />
+          <Property Name="insertions_limit" Type="Int32" />
+          <Property Name="expose_at_all" Type="Boolean" />
+          <Property Name="expose_in_groups" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="expose_in" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" />
+          <Property Name="last_modified_date" Type="DateTime" />
+          <NavigationProperty Name="report" Relationship="eniModel.report_media" FromRole="media" ToRole="report" />
+        </EntityType>
+        <EntityType Name="modules">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" />
+          <NavigationProperty Name="user_role_permission" Relationship="eniModel.permission_module" FromRole="modules" ToRole="user_role_permission" />
+        </EntityType>
+        <EntityType Name="report">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="display_id" Type="Int32" />
+          <Property Name="media_id" Type="Int32" />
+          <Property Name="insetions_counted" Type="Int32" />
+          <Property Name="date_start" Type="DateTime" />
+          <Property Name="date_end" Type="DateTime" />
+          <Property Name="date_created" Type="DateTime" />
+          <NavigationProperty Name="display" Relationship="eniModel.report_display" FromRole="report" ToRole="display" />
+          <NavigationProperty Name="media" Relationship="eniModel.report_media" FromRole="report" ToRole="media" />
+        </EntityType>
+        <EntityType Name="user">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="user_role_id" Type="Int32" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="user_picture_url" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="token" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="token_expiration_date" Type="DateTime" />
+          <Property Name="created_by" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" />
+          <Property Name="last_modified_date" Type="DateTime" />
+          <Property Name="is_active" Type="Boolean" />
+          <Property Name="is_super_user" Type="Boolean" />
+          <NavigationProperty Name="user_role" Relationship="eniModel.user_role1" FromRole="user" ToRole="user_role" />
+        </EntityType>
+        <EntityType Name="user_role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" />
+          <Property Name="created_by" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" />
+          <NavigationProperty Name="user" Relationship="eniModel.user_role1" FromRole="user_role" ToRole="user" />
+          <NavigationProperty Name="user_role_permission" Relationship="eniModel.role_permission" FromRole="user_role" ToRole="user_role_permission" />
+        </EntityType>
+        <EntityType Name="user_role_permission">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_role_id" Type="Int32" Nullable="false" />
+          <Property Name="module_id" Type="Int32" Nullable="false" />
+          <Property Name="can_read" Type="Boolean" />
+          <Property Name="can_write" Type="Boolean" />
+          <Property Name="can_delete" Type="Boolean" />
+          <Property Name="is_active" Type="Boolean" />
+          <Property Name="created_by" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" />
+          <NavigationProperty Name="modules" Relationship="eniModel.permission_module" FromRole="user_role_permission" ToRole="modules" />
+          <NavigationProperty Name="user_role" Relationship="eniModel.role_permission" FromRole="user_role_permission" ToRole="user_role" />
+        </EntityType>
+        <Association Name="report_display">
+          <End Type="eniModel.display" Role="display" Multiplicity="0..1" />
+          <End Type="eniModel.report" Role="report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="display">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="report">
+              <PropertyRef Name="display_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="report_media">
+          <End Type="eniModel.media" Role="media" Multiplicity="0..1" />
+          <End Type="eniModel.report" Role="report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="report">
+              <PropertyRef Name="media_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="permission_module">
+          <End Type="eniModel.modules" Role="modules" Multiplicity="1" />
+          <End Type="eniModel.user_role_permission" Role="user_role_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="modules">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_role_permission">
+              <PropertyRef Name="module_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="user_role1">
+          <End Type="eniModel.user_role" Role="user_role" Multiplicity="0..1" />
+          <End Type="eniModel.user" Role="user" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user">
+              <PropertyRef Name="user_role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="role_permission">
+          <End Type="eniModel.user_role" Role="user_role" Multiplicity="1" />
+          <End Type="eniModel.user_role_permission" Role="user_role_permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="user_role">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="user_role_permission">
+              <PropertyRef Name="user_role_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="eniModelStoreContainer" CdmEntityContainer="eniEntities">
+          <EntitySetMapping Name="display">
+            <EntityTypeMapping TypeName="eniModel.display">
+              <MappingFragment StoreEntitySet="display">
+                <ScalarProperty Name="last_modified_date" ColumnName="last_modified_date" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="last_activity_date" ColumnName="last_activity_date" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="timetable" ColumnName="timetable" />
+                <ScalarProperty Name="display_size" ColumnName="display_size" />
+                <ScalarProperty Name="orientation" ColumnName="orientation" />
+                <ScalarProperty Name="location" ColumnName="location" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="media">
+            <EntityTypeMapping TypeName="eniModel.media">
+              <MappingFragment StoreEntitySet="media">
+                <ScalarProperty Name="last_modified_date" ColumnName="last_modified_date" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="expose_in" ColumnName="expose_in" />
+                <ScalarProperty Name="expose_in_groups" ColumnName="expose_in_groups" />
+                <ScalarProperty Name="expose_at_all" ColumnName="expose_at_all" />
+                <ScalarProperty Name="insertions_limit" ColumnName="insertions_limit" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="media_url" ColumnName="media_url" />
+                <ScalarProperty Name="timing" ColumnName="timing" />
+                <ScalarProperty Name="media_type" ColumnName="media_type" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="modules">
+            <EntityTypeMapping TypeName="eniModel.modules">
+              <MappingFragment StoreEntitySet="modules">
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="report">
+            <EntityTypeMapping TypeName="eniModel.report">
+              <MappingFragment StoreEntitySet="report">
+                <ScalarProperty Name="date_created" ColumnName="date_created" />
+                <ScalarProperty Name="date_end" ColumnName="date_end" />
+                <ScalarProperty Name="date_start" ColumnName="date_start" />
+                <ScalarProperty Name="insetions_counted" ColumnName="insetions_counted" />
+                <ScalarProperty Name="media_id" ColumnName="media_id" />
+                <ScalarProperty Name="display_id" ColumnName="display_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user">
+            <EntityTypeMapping TypeName="eniModel.user">
+              <MappingFragment StoreEntitySet="user">
+                <ScalarProperty Name="is_super_user" ColumnName="is_super_user" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="last_modified_date" ColumnName="last_modified_date" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="token_expiration_date" ColumnName="token_expiration_date" />
+                <ScalarProperty Name="token" ColumnName="token" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="user_picture_url" ColumnName="user_picture_url" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="user_role_id" ColumnName="user_role_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_role">
+            <EntityTypeMapping TypeName="eniModel.user_role">
+              <MappingFragment StoreEntitySet="user_role">
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="user_role_permission">
+            <EntityTypeMapping TypeName="eniModel.user_role_permission">
+              <MappingFragment StoreEntitySet="user_role_permission">
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="can_delete" ColumnName="can_delete" />
+                <ScalarProperty Name="can_write" ColumnName="can_write" />
+                <ScalarProperty Name="can_read" ColumnName="can_read" />
+                <ScalarProperty Name="module_id" ColumnName="module_id" />
+                <ScalarProperty Name="user_role_id" ColumnName="user_role_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

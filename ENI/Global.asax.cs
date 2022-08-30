@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Routing;
+using System.Web.Security;
+using System.Web.SessionState;
+
+namespace ENI
+{
+    public class Global : System.Web.HttpApplication
+    {
+
+        protected void Application_Start(object sender, EventArgs e)
+        {
+            RegisterRoutes(RouteTable.Routes);
+        }
+
+        void RegisterRoutes(RouteCollection routes)
+        {
+            routes.MapPageRoute("home",
+                "home", "~/index.aspx", false);
+
+            routes.MapPageRoute("usuarios",
+                "usuarios", "~/pages/usuarios.aspx", false);
+
+            routes.MapPageRoute("login",
+                "login", "~/login.aspx", false);
+
+        }
+
+            protected void Session_Start(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_AuthenticateRequest(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_Error(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Session_End(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void Application_End(object sender, EventArgs e)
+        {
+
+        }
+    }
+}

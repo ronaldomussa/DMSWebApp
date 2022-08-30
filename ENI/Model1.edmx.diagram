@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b1b09c0a7ca740099d26af66f81f1f6d" Name="Diagram1">
+        <EntityTypeShape EntityType="eniModel.display" Width="1.5" PointX="5.75" PointY="6.375" />
+        <EntityTypeShape EntityType="eniModel.media" Width="1.5" PointX="5.75" PointY="1" />
+        <EntityTypeShape EntityType="eniModel.modules" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="eniModel.report" Width="1.5" PointX="8" PointY="1.75" />
+        <EntityTypeShape EntityType="eniModel.user" Width="1.5" PointX="3" PointY="7" />
+        <EntityTypeShape EntityType="eniModel.user_role" Width="1.5" PointX="0.75" PointY="3.875" />
+        <EntityTypeShape EntityType="eniModel.user_role_permission" Width="1.5" PointX="3" PointY="2.5" />
+        <AssociationConnector Association="eniModel.report_display" />
+        <AssociationConnector Association="eniModel.report_media" />
+        <AssociationConnector Association="eniModel.permission_module" />
+        <AssociationConnector Association="eniModel.user_role1" />
+        <AssociationConnector Association="eniModel.role_permission" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

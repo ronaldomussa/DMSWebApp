@@ -1,0 +1,32 @@
+﻿html,
+body {
+    background-color: #eee;
+    background: #eee url(../img/bg-login.jpg) no-repeat;
+    
+}
+
+
+.copy-footer {
+
+    position:fixed;
+    bottom: 15px;
+    left: 0; right:0;
+    text-align:center;
+    z-index: 100;
+    color:#777; 
+
+}
+
+.form-signin {
+    margin-top: 25%;
+}
+
+    .form-signin input[type="email"] {
+        margin-bottom: 20px;
+        padding: 20px 15px;
+    }
+
+    .form-signin input[type="password"] {
+        margin-bottom: 10px;
+        padding: 20px;
+    }

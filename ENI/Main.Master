@@ -88,14 +88,21 @@ WWWWWW__WW___WW__WW__WWWWWW__WWWWWW__WW_________WW______
 
                     <li class="nav-item">
                         <a class="nav-link" href="/home">
-                            <img class="icon" src="assets/img/home_FILL0_wght300_GRAD0_opsz24.svg" alt="Home"/>
+                            <img class="icon" src="assets/img/home_FILL0_wght300_GRAD0_opsz24.svg" alt=""/>
                             <span class="text-label">Home</span>
                         </a>
                     </li>
 
-                     <li class="nav-item" id="navUsers" runat="server">
+                    <li class="nav-item" id="navDisplays" runat="server">
+                        <a class="nav-link" href="/displays">
+                            <img class="icon" src="assets/img/live_tv_FILL0_wght300_GRAD0_opsz24.svg" alt="" />
+                            <span class="text-label">Displays</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item" id="navUsers" runat="server">
                         <a class="nav-link" href="/usuarios">
-                            <img class="icon" src="assets/img/group_FILL0_wght300_GRAD0_opsz24.svg" alt="Home"/>
+                            <img class="icon" src="assets/img/group_FILL0_wght300_GRAD0_opsz24.svg" alt="" />
                             <span class="text-label">Usuários</span>
                         </a>
                     </li>
@@ -106,9 +113,9 @@ WWWWWW__WW___WW__WW__WWWWWW__WWWWWW__WW_________WW______
                             <span>Config</span></a>
                     </li>--%>
 
-                    <li class="nav-item" id="Li1" runat="server">
+                    <li class="nav-item" id="navLogout" runat="server">
                         <asp:LinkButton CssClass="nav-link" OnClick="btnLoggout_Click" runat="server">
-                            <img class="icon" src="assets/img/logout_FILL0_wght300_GRAD0_opsz24.svg" alt="Home"/>
+                            <img class="icon" src="assets/img/logout_FILL0_wght300_GRAD0_opsz24.svg" alt=""/>
                             <span class="text-label">Sair</span>
                         </asp:LinkButton>
                     </li>

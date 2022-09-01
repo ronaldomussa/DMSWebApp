@@ -59,7 +59,47 @@ namespace ENI.Controller
         }
 
         [WebMethod]
-        public string Save(bool isNew, int? id, string name, string email, string phone, bool autopassword, string password, int? role_id)
+        public string Insert(string name, string email, string phone, string password, string user_role_id)
+        {
+            
+            var Logado = IsLogged.loggedUser;
+
+            if (Logado == null)
+            {
+                Context.Response.StatusCode = 401;
+                return "Usuário não logado";
+            }
+
+            if (IsLogged.loggedUser.user_role_id.HasValue) // if hasn't then the user is a superuser
+            {
+                if (IsLogged.loggedUser.user_role_id.Value == 2)
+                {
+                    Context.Response.StatusCode = 405;
+                    return "Ação não permitida para este usuário.";
+                }
+            }
+
+            Context.Response.StatusCode = 400;
+
+            if (string.IsNullOrWhiteSpace(name))
+                return "Digite um nome válido";
+
+            if (string.IsNullOrWhiteSpace(email))
+                return "Digite um email válido";
+
+            if (string.IsNullOrWhiteSpace(password))
+                return "Digite uma senha válida";
+
+            int userRoleId;
+            if(!int.TryParse(user_role_id, out userRoleId))
+                return "Selecione um perfil";
+
+            return UserController.Save(null, name, email, phone, password, userRoleId, false);
+            
+        }
+
+        [WebMethod]
+        public string Edit(int id, string name, string email, string phone, string password, string user_role_id)
         {
             var Logado = IsLogged.loggedUser;
 
@@ -69,60 +109,27 @@ namespace ENI.Controller
                 return "Usuário não logado";
             }
 
-            eniEntities db = new eniEntities();
-            user item = new user();
+            Context.Response.StatusCode = 400;
 
-            if (isNew)
-                item = new user();
-            else
-            {
-                var model = (from a in db.user where a.id == id select a);
+            if (string.IsNullOrWhiteSpace(name))
+                return "Digite um nome válido";
 
-                if (model.Count() > 0)
-                    item = model.FirstOrDefault();
-                else
-                    return "Não foi possivel editar.";
-            }
+            if (string.IsNullOrWhiteSpace(email))
+                return "Digite um email válido";
 
-            string pass = string.Empty;
+            if (string.IsNullOrWhiteSpace(password))
+                return "Digite uma senha válida";
 
-            item.name = name;
-            
-            if (Util.IsValidEmail(email))
-                item.email = email;
-            else
-                return "Email inválido";
+            int userRoleId;
+            if (!int.TryParse(user_role_id, out userRoleId))
+                return "Selecione um perfil válido";
 
-            item.phone = phone;
+            return UserController.Save(id, name, email, phone, password, userRoleId, false);
 
-            if (!autopassword)
-                pass = password;
-            else
-                pass = Util.GenerateRandomNumber(6);
-
-            item.password = Util.GenerateHashMd5(pass);
-
-            // if empty, the user has full control
-            if (role_id.HasValue)
-                item.user_role_id = role_id.Value;
-
-            if (isNew)
-            {
-                item.created_date = DateTime.Now;
-                item.is_active = true;
-                item.created_by = IsLogged.loggedUser.name;
-                item.is_super_user = false;
-                db.user.Add(item);
-            }
-
-            if (db.SaveChanges() > 0)
-                return "Salvo com sucesso";
-            else
-                return "Falha ao registrar";
         }
 
         [WebMethod]
-        public string Remover(int id)
+        public string ToggleActivation(int id)
         {
 
             if (IsLogged.loggedUser == null)
@@ -131,38 +138,44 @@ namespace ENI.Controller
                 return "Nenhum usuário autenticado para esta ação.";
             }
 
-            if (!IsLogged.loggedUser.is_super_user.Value)
+            if (IsLogged.loggedUser.user_role_id.HasValue) // if hasn't then the user is a superuser
             {
-                Context.Response.StatusCode = 405;
-                return "Ação não permitita para este usuário.";
+                if(IsLogged.loggedUser.user_role_id.Value == 2)
+                {
+                    Context.Response.StatusCode = 405;
+                    return "Ação não permitida para este usuário.";
+                }
             }
 
-            string resposta = string.Empty;
-            eniEntities db = new eniEntities();
-
-            var busca = (from a in db.user
-                         where a.id == id
-                         select a);
-
-            if (busca.Count() > 0)
-            {
-                var item = busca.FirstOrDefault();
-                item.is_active = !item.is_active;
-
-                if (db.SaveChanges() > 0)
-                    resposta = "Usuário " + (item.is_active.Value ? "está ativo." : "foi inativado.");
-            }
-            else
-            {
-                Context.Response.StatusCode = 400;
-                resposta = "Registro não encontrado.";
-            }
-
-            return resposta;
+            return UserController.ToggleActivation(id); ;
         }
 
         [WebMethod]
-        public List<user_role> RoleList()
+        public string Remove(int id)
+        {
+            Context.Response.StatusCode = 400;
+
+            if (IsLogged.loggedUser == null)
+            {
+                Context.Response.StatusCode = 401;
+                return "Nenhum usuário autenticado para esta ação.";
+            }
+
+            if (IsLogged.loggedUser.is_super_user.HasValue)
+            {
+                if (IsLogged.loggedUser.is_super_user.Value)
+                {
+                    Context.Response.StatusCode = 405;
+                    return UserController.Remove(id); ;
+                }
+            }
+
+            return "Ação não permitida para este usuário.";
+            
+        }
+
+        [WebMethod]
+        public List<user_role> UserRoleList()
         {
             var Logado = IsLogged.loggedUser;
 

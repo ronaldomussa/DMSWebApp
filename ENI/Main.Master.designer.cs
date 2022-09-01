@@ -33,6 +33,15 @@ namespace ENI
         protected global::System.Web.UI.HtmlControls.HtmlForm main_form;
 
         /// <summary>
+        /// Controle navDisplays.
+        /// </summary>
+        /// <remarks>
+        /// Campo gerado automaticamente.
+        /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl navDisplays;
+
+        /// <summary>
         /// Controle navUsers.
         /// </summary>
         /// <remarks>
@@ -42,13 +51,13 @@ namespace ENI
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl navUsers;
 
         /// <summary>
-        /// Controle Li1.
+        /// Controle navLogout.
         /// </summary>
         /// <remarks>
         /// Campo gerado automaticamente.
         /// Modificar a declaração do campo de movimento do arquivo de designer para o arquivo code-behind.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Li1;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl navLogout;
 
         /// <summary>
         /// Controle Content.

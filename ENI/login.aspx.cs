@@ -20,7 +20,10 @@ namespace ENI
             if (loggedUser != null)
             {
                 IsLogged.SetSessionAndCookie(loggedUser);
+
                 string url_to_redirect = Request.QueryString["page"];
+                if (string.IsNullOrEmpty(url_to_redirect))
+                    url_to_redirect = "home";
                 Response.Redirect(url_to_redirect, true);
             }
             

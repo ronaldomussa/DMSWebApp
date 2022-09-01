@@ -18,5 +18,11 @@
         public const string CREDENTIAL_EMAIL    = "";
         public const string CREDENTIAL_PASSWORD = "";        
     }
+
+    public enum userRole
+    {
+        Admin = 1,
+        Padrao = 2
+    }
     
 }

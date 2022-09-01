@@ -18,7 +18,7 @@ namespace ENI
             IsLogged.versao = assName.Version;
             //lblUsuarioLogado.Text = IsLogged.loggedUser.email;
 
-            navUsers.Visible = (IsLogged.loggedUser.is_super_user.Value);
+            //navUsers.Visible = (IsLogged.loggedUser.is_super_user.Value);
 
         }
 

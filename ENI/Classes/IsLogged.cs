@@ -72,15 +72,15 @@ namespace ENI
             HttpContext.Current.Session.Add(Constants.LoginSession.LOGIN_SESSION, userToSession);
 
             // Add in Cookie
-            HttpCookie cookie = new HttpCookie(Constants.LoginSession.LOGIN_COOKIE);
+            //HttpCookie cookie = new HttpCookie(Constants.LoginSession.LOGIN_COOKIE);
 
-            cookie.Expires = DateTime.Now.AddHours(8);
+            //cookie.Expires = DateTime.Now.AddHours(8);
 
-            string storedCookie = string.Format("{0};{1};{2}", userToSession.id, userToSession.name, userToSession.email);
+           // string storedCookie = string.Format("{0};{1};{2}", userToSession.id, userToSession.name, userToSession.email);
 
-            cookie.Value = Util.stringTrunc(storedCookie);
+            //cookie.Value = Util.stringTrunc(storedCookie);
 
-            HttpContext.Current.Response.Cookies.Add(cookie);
+            //HttpContext.Current.Response.Cookies.Add(cookie);
         }
 
         public static void Loggout()

@@ -18,11 +18,17 @@ namespace ENI
 
         void RegisterRoutes(RouteCollection routes)
         {
+            routes.MapPageRoute("",
+                "", "~/index.aspx", false);
+
             routes.MapPageRoute("home",
                 "home", "~/index.aspx", false);
 
             routes.MapPageRoute("usuarios",
-                "usuarios", "~/pages/usuarios.aspx", false);
+                "usuarios", "~/pages/users.aspx", false);
+
+            routes.MapPageRoute("displays",
+                "displays", "~/pages/displays.aspx", false);
 
             routes.MapPageRoute("login",
                 "login", "~/login.aspx", false);

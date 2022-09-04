@@ -16,19 +16,6 @@
 
 });
 
-app.filter("role", function () {
-
-    const output = {
-        1: 'PADRÃO',
-        2: 'ADMIN'
-    };
-
-    return function (s) {
-        return output[s];
-    }
-
-});
-
 app.directive('bsTooltip', function () {
     return {
         restrict: 'A',
@@ -44,9 +31,9 @@ app.directive('bsTooltip', function () {
     };
 });
 
-app.controller('UsersCtrl', ['$http', '$filter', 'logged_user', UsersCtrl]);
+app.controller('DisplaysCtrl', ['$http', 'logged_user', DisplaysCtrl]);
 
-function UsersCtrl($http, $filter, logged_user) {
+function DisplaysCtrl($http, logged_user) {
 
     var vm = this;
 
@@ -57,17 +44,26 @@ function UsersCtrl($http, $filter, logged_user) {
     vm.list_loading = false;
     vm.save_loading = false;
 
+    vm.tipo_display = {
+       
+        1: 'Paisagem',
+        2: 'Retrato',
+        3: 'Livre'
+    };
+
     vm.crud = {
 
         edit: function (item) {
 
-            if (item)
-                angular.copy(item, vm.selected_item);
+            vm.selected_item_edited = item;
+            angular.copy(item, vm.selected_item);
+            vm.selected_item.orientation = vm.selected_item.orientation.toString();
 
-            vm.tab_name = "Editar Usuário";
+            vm.tab_name = "Editar Display";
 
             //console
-            console.log('edit item', vm.selected_item);
+            console.log('edit selected_item', vm.selected_item);
+            console.log('edit selected_item_edited', vm.selected_item_edited);
         },
 
         list: function () {
@@ -76,12 +72,12 @@ function UsersCtrl($http, $filter, logged_user) {
 
         add: function () {
             reset();
-            vm.tab_name = "Novo Usuário";
+            vm.tab_name = "Novo Display";
         },
 
         save: function () {
             vm.save_loading = true;
-            //console.log('crud save selected_item', vm.selected_item);
+            console.log('crud save selected_item', vm.selected_item);
 
             if (!is_valid_form()) {
                 //console.log('is_save_valid: false');
@@ -91,7 +87,7 @@ function UsersCtrl($http, $filter, logged_user) {
 
             $http({
                 method: 'POST',
-                url: '/controller/users.asmx/insert',
+                url: '/controller/displays.asmx/insert',
                 data: vm.selected_item
             }).then(function (resposta) {
 
@@ -135,15 +131,8 @@ function UsersCtrl($http, $filter, logged_user) {
 
             $http({
                 method: 'POST',
-                url: '/controller/users.asmx/edit',
-                data: {
-                    id: vm.selected_item.id,
-                    name: vm.selected_item.name,
-                    phone: vm.selected_item.phone,
-                    email: vm.selected_item.email,
-                    password: vm.selected_item.password,
-                    user_role_id: vm.selected_item.user_role_id
-                }
+                url: '/controller/displays.asmx/edit',
+                data: vm.selected_item
             }).then(function (resposta) {
 
                 Swal.fire('', resposta.data.d, 'success');
@@ -173,48 +162,31 @@ function UsersCtrl($http, $filter, logged_user) {
 
         remove: function (item) {
 
-            $http({
-                method: 'POST',
-                url: '/controller/users.asmx/remove',
-                data: { id: item.id }
-            }).then(function (resposta) {
-
-                new Noty({
-                    theme: 'sunset',
-                    type: 'success',
-                    layout: 'topRight',
-                    timeout: 4000,
-                    text: resposta.data.d
-                }).show();
-
-                remove_from_array(item);
-
-                console.log('users.asmx/remove', resposta);
-
-            }, function (resposta) {
-
-                vm.save_loading = false;
-
-                let message = "Algo inesperado";
-                if (resposta.data.d)
-                    message = resposta.data.d;
-
-                Swal.fire('Algo errado.', message, 'error');
-                //console
-                console.log('users.asmx/remove erro', resposta);
-
-            });
-
+            Swal.fire({
+                title: 'Tem certeza?',
+                text: "Esta ação não poderá ser desfeita.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ff3300',
+                cancelButtonColor: '#555',
+                confirmButtonText: 'Sim, exclua este registro.'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    remove_from_db(item);
+                }
+            })
 
         },
 
         toggle_activation: function (item) {
 
             item.is_active = !item.is_active;
-            console.log('ToggleActivation item.', item);
+
+            console.log('toggle_activate item.', item);
+
             $http({
                 method: 'POST',
-                url: '/controller/users.asmx/ToggleActivation',
+                url: '/controller/displays.asmx/ToggleActivation',
                 data: { id: item.id }
             }).then(function (resposta) {
 
@@ -252,6 +224,41 @@ function UsersCtrl($http, $filter, logged_user) {
 
     };
 
+    function remove_from_db(item) {
+
+        $http({
+            method: 'POST',
+            url: '/controller/displays.asmx/remove',
+            data: { id: item.id }
+        }).then(function (resposta) {
+
+            new Noty({
+                theme: 'sunset',
+                type: 'success',
+                layout: 'topRight',
+                timeout: 4000,
+                text: resposta.data.d
+            }).show();
+
+            remove_from_array(item);
+
+            console.log('displays.asmx/remove', resposta);
+
+        }, function (resposta) {
+
+            vm.save_loading = false;
+
+            let message = "Algo inesperado";
+            if (resposta.data.d)
+                message = resposta.data.d;
+
+            Swal.fire('Algo errado.', message, 'error');
+
+            console.log('display.asmx/remove erro', resposta);
+        });
+
+    }
+
     function remove_from_array(item) {
 
         console.log('ENTROU do for remove_from_array');
@@ -277,21 +284,12 @@ function UsersCtrl($http, $filter, logged_user) {
         if (!vm.selected_item.name)
             message = "Digite um nome válido";
 
-        else if (!vm.selected_item.email)
-            message = "Digite um email válido";
-
-        else if (!vm.selected_item.password)
-            message = "Digite uma senha válida";
-
-        else if (!vm.selected_item.user_role_id)
-            message = "Selecione um perfil válido";
-
         if (message) {
             is_valid = false;
             Swal.fire('Algo errado.', message, 'error');
         }
 
-        console.log('is_form_validation message', vm.selected_item);
+        console.log('display validation message', vm.selected_item);
 
         return is_valid;
     }
@@ -301,10 +299,11 @@ function UsersCtrl($http, $filter, logged_user) {
         vm.selected_item = {
             id: null,
             name: '',
-            email: '',
-            phone: '',
-            password: '',
-            user_role_id: '',
+            token: '',
+            orientation: '2',
+            display_size: '1080x1920',
+            location: '',
+            is_active: true,
             is_new: false
         };
 
@@ -323,7 +322,7 @@ function UsersCtrl($http, $filter, logged_user) {
 
         $http({
             method: 'POST',
-            url: '/controller/users.asmx/list',
+            url: '/controller/displays.asmx/list',
             data: {}
         }).then(function (resposta) {
 

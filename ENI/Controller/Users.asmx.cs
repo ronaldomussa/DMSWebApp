@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using System.Web.Security;
 using System.Web.Services;
@@ -23,6 +24,8 @@ namespace ENI.Controller
         [WebMethod]
         public List<userDTO> List()
         {
+
+
             var Logado = IsLogged.loggedUser;
 
             if (Logado == null)
@@ -35,8 +38,8 @@ namespace ENI.Controller
 
             var list = (from a in db.user
                         where 
-                            a.is_super_user == false && 
-                            a.id != IsLogged.loggedUser.id
+                            a.is_super_user == false
+                            //&& a.id != IsLogged.loggedUser.id
                         select new userDTO { 
                             name = a.name,
                             created_by = a.created_by,
@@ -53,8 +56,8 @@ namespace ENI.Controller
                             user_picture_url = a.user_picture_url,
                             user_role_id = a.user_role_id
                         });
-            
 
+            //Thread.Sleep(2000);
             return list.ToList();
         }
 
@@ -107,6 +110,18 @@ namespace ENI.Controller
             {
                 Context.Response.StatusCode = 401;
                 return "Usuário não logado";
+            }
+
+            if(IsLogged.loggedUser.id != id)
+            { 
+                if (IsLogged.loggedUser.user_role_id.HasValue) // if hasn't then the user is a superuser
+                {
+                    if (IsLogged.loggedUser.user_role_id.Value == 2)
+                    {
+                        Context.Response.StatusCode = 405;
+                        return "Ação não permitida para este usuário.";
+                    }
+                }
             }
 
             Context.Response.StatusCode = 400;

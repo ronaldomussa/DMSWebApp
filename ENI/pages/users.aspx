@@ -10,7 +10,7 @@
         <div id="aba" class="navmenu-tabs d-print-none">
             <ul class="nav nav-tabs ml-3">
                 <li class="nav-item active">
-                    <button type="button" class="nav-link" ng-click="ctrl.crud.list()"><i class="fas fa-bars mr-2"></i>Lista</button>
+                    <button type="button" class="nav-link" ng-click="ctrl.crud.list()"><i class="fas fa-bars mr-2"></i>Usuários</button>
                 </li>
                 <li class="nav-item">
                     <button type="button" class="nav-link" ng-click="ctrl.crud.add()" data-toggle="modal" data-target="#modal"><i class="fas fa-plus mr-2"></i>Novo</button>
@@ -23,10 +23,10 @@
             <div id="tab_lista">
 
                 <div class="loading text-center" ng-show="ctrl.list_loading">
-                    <i class="fa fa-clock fa-fw mr-2"></i>carregando..
+                    <i class="fas fa-spinner fa-pulse fa-fw mr-2"></i>carregando..
                 </div>
 
-                <div class="p-4 text-center" ng-show="!ctrl.data.length">
+                <div class="p-4 text-center" ng-show="!ctrl.data.length && !ctrl.list_loading">
                     <p>Nenhum registro encontrado.</p>
                 </div>
                 
@@ -44,9 +44,9 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="item in ctrl.data" ng-class="{'bg-inativo' : item.inativo}">
+                                <tr ng-repeat="item in ctrl.data" ng-class="{'text-muted' : !item.is_active}">
                                         
-                                    <td>{{item.name}}</td>
+                                    <td><span ng-show="(item.id == ctrl.logged_user.id)" class="badge badge-primary mr-2">Você</span>{{item.name}} {{logged_user.id}}</td>
                                     <td>{{item.email}}</td>
                                     <td><span class="small">{{(item.user_role_id | role)}}</span></td>
                                     <td>{{(item.created_date | dateConvert)}} <span ng-show="item.is_new" class="badge badge-warning">novo</span></td>
@@ -123,14 +123,14 @@
                     </div>
                     <div class="modal-footer">
 
-                        <input type="hidden" id="hfdItemId" value="{{ctrl.selected_item.id}}" runat="server" />
                         <button type="button" class="btn btn-secondary btn-lg" ng-click="ctrl.crud.list()" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-success btn-lg" ng-disabled="ctrl.save_loading" ng-click="ctrl.crud.save()">
+                        
+                        <button type="button" class="btn btn-success btn-lg" ng-hide="ctrl.selected_item.id" ng-disabled="ctrl.save_loading" ng-click="ctrl.crud.save()">
                             <i class="fa fa-spinner fa-spin mr-2" ng-show="ctrl.save_loading"></i>
-                            {{ctrl.save_loading ? 'Salvando ..':'Salvar'}}
+                            {{ctrl.save_loading ? 'Salvando ..':'Inserir'}}
                         </button>
 
-                        <button type="button" class="btn btn-success btn-lg" ng-show="" ng-disabled="ctrl.save_loading" ng-click="ctrl.crud.save_edit()">
+                        <button type="button" class="btn btn-primary btn-lg" ng-show="ctrl.selected_item.id" ng-disabled="ctrl.save_loading" ng-click="ctrl.crud.save_edit()">
                             <i class="fa fa-spinner fa-spin mr-2" ng-show="ctrl.save_loading"></i>
                             {{ctrl.save_loading ? 'Salvando ..':'Salvar'}}
                         </button>
@@ -144,5 +144,8 @@
 
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="After" runat="server">
-    <script src="/angular/users.controller.js?v=1.1"></script>
+    <script type="text/javascript">
+        app.value('logged_user', <%= (Newtonsoft.Json.JsonConvert.SerializeObject((ENI.Classes.userSessionDTO)Session[ENI.Constants.LoginSession.LOGIN_SESSION])) %>);
+    </script>
+    <script src="/angular/users.controller.js"></script>
 </asp:Content>

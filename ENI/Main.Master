@@ -227,26 +227,26 @@ WWWWWW__WW___WW__WW__WWWWWW__WWWWWW__WW_________WW______
         <script src="/node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
         <script src="/node_modules/noty/lib/noty.min.js"></script>
         <script src="/assets/js/utilities.js?v=2"></script>
+        <script src="https://kit.fontawesome.com/66f07ab198.js" crossorigin="anonymous"></script>
+        <script src="angular/app.module.js"></script>
 
         <script id="main">
+
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip();
 
                 var str = location.pathname;
-                
+
                 $("#sidebar .nav-item").each(function () {
 
-                    var current_href = $(this).children('.nav-link').attr("href").toLowerCase();                    
+                    var current_href = $(this).children('.nav-link').attr("href").toLowerCase();
 
-                    if (str.indexOf(current_href) > -1)                        
+                    if (str.indexOf(current_href) > -1)
                         $(this).addClass("current-menu-item");
-                    
+
                 });
             })
         </script>
-        
-        <script src="https://kit.fontawesome.com/66f07ab198.js" crossorigin="anonymous"></script>
-        <script src="angular/app.module.js"></script>
         <asp:ContentPlaceHolder ID="After" runat="server"></asp:ContentPlaceHolder>
     </form>
     

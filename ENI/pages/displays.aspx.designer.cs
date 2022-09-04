@@ -11,7 +11,7 @@ namespace ENI.pages
 {
 
 
-    public partial class users
+    public partial class displays
     {
     }
 }

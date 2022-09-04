@@ -20,7 +20,7 @@ namespace ENI
         public Nullable<bool> can_read { get; set; }
         public Nullable<bool> can_write { get; set; }
         public Nullable<bool> can_delete { get; set; }
-        public Nullable<bool> is_active { get; set; }
+        public bool is_active { get; set; }
         public string created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
     

@@ -163,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="angular\app.module.js" />
+    <Content Include="angular\displays.controller.js" />
     <Content Include="angular\users.controller.js" />
     <Content Include="assets\css\theme.min.css" />
     <Content Include="assets\css\_home.css" />
@@ -181,6 +182,7 @@
     <Content Include="assets\img\logo-vertical.png" />
     <Content Include="assets\img\logout_FILL0_wght300_GRAD0_opsz24.svg" />
     <Content Include="assets\js\utilities.js" />
+    <Content Include="Controller\Displays.asmx" />
     <Content Include="Controller\Users.asmx" />
     <Content Include="Global.asax" />
     <Content Include="index.aspx" />
@@ -219,6 +221,7 @@
     <Content Include="node_modules\sweetalert2\dist\sweetalert2.min.css" />
     <Content Include="node_modules\sweetalert2\dist\sweetalert2.min.js" />
     <Content Include="login.aspx" />
+    <Content Include="pages\displays.aspx" />
     <Content Include="pages\users.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -229,7 +232,13 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Classes\userDTO.cs" />
+    <Compile Include="Classes\userSessionDTO.cs" />
     <Compile Include="Classes\Util.cs" />
+    <Compile Include="Controller\DisplayController.cs" />
+    <Compile Include="Controller\Displays.asmx.cs">
+      <DependentUpon>Displays.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controller\Login.cs" />
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="Controller\Users.asmx.cs">
@@ -283,6 +292,13 @@
     </Compile>
     <Compile Include="modules.cs">
       <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="pages\displays.aspx.cs">
+      <DependentUpon>displays.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="pages\displays.aspx.designer.cs">
+      <DependentUpon>displays.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="pages\users.aspx.cs">

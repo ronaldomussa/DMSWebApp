@@ -23,7 +23,7 @@ namespace ENI
     
         public int id { get; set; }
         public string name { get; set; }
-        public Nullable<bool> is_active { get; set; }
+        public bool is_active { get; set; }
         public string created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
     

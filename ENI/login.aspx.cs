@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ENI.Classes;
+using System;
 using System.Web;
 
 namespace ENI
@@ -15,10 +16,20 @@ namespace ENI
             string email = txtLogin.Text;
             string password = txtPassword.Text;
 
-            var loggedUser = Controller.Login.SingIn(email, password);
+            var userTryingLogin = Controller.Login.SingIn(email, password);
 
-            if (loggedUser != null)
+            if (userTryingLogin != null)
             {
+                // user keept in session
+                userSessionDTO loggedUser = new userSessionDTO();
+                loggedUser.id = userTryingLogin.id;
+                loggedUser.name = userTryingLogin.name;
+                loggedUser.phone = userTryingLogin.phone;
+                loggedUser.email = userTryingLogin.email;
+                loggedUser.user_picture_url = userTryingLogin.user_picture_url;
+                loggedUser.user_role_id = userTryingLogin.user_role_id;
+                loggedUser.is_super_user = userTryingLogin.is_super_user;
+
                 IsLogged.SetSessionAndCookie(loggedUser);
 
                 string url_to_redirect = Request.QueryString["page"];

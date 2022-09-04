@@ -26,7 +26,7 @@ namespace ENI
         public string created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<System.DateTime> last_modified_date { get; set; }
-        public Nullable<bool> is_active { get; set; }
+        public bool is_active { get; set; }
         public Nullable<bool> is_super_user { get; set; }
     
         public virtual user_role user_role { get; set; }

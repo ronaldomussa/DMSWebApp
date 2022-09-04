@@ -118,7 +118,7 @@ namespace ENI.Controller
                     if (db.SaveChanges() > 0)
                     {
                         HttpContext.Current.Response.StatusCode = 200;
-                        resposta = "Usuário " + (item.is_active.Value ? "está ativo." : "foi inativado.");
+                        resposta = "Usuário " + (item.is_active ? "está ativo." : "foi inativado.");
                     }
                     else
                         resposta = "Nenhuma mudança"; 

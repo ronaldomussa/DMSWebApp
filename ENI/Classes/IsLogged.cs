@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ENI.Classes;
+using System;
 using System.Linq;
 using System.Web;
 
@@ -6,7 +7,7 @@ namespace ENI
 {
     public class IsLogged : System.Web.UI.Page
     {
-        public static user loggedUser { get; set; }
+        public static userSessionDTO loggedUser { get; set; }
         public static Version versao { get; set; }
 
         public void Page_PreInit(object sender, EventArgs e)
@@ -16,7 +17,7 @@ namespace ENI
 
         private void CheckSession()
         {
-            loggedUser = (user)Session[Constants.LoginSession.LOGIN_SESSION];
+            loggedUser = (userSessionDTO)Session[Constants.LoginSession.LOGIN_SESSION];
 
             if (loggedUser == null)
             {
@@ -37,6 +38,7 @@ namespace ENI
 
         private void CheckCookie()
         {
+            /*
             var userCookie = Request.Cookies[Constants.LoginSession.LOGIN_COOKIE];
 
             if (userCookie != null) 
@@ -64,9 +66,10 @@ namespace ENI
             }
             else
                 Response.Redirect("~/login?error=session");
+            */
         }
 
-        public static void SetSessionAndCookie(user userToSession)
+        public static void SetSessionAndCookie(userSessionDTO userToSession)
         {
             // Add in Session
             HttpContext.Current.Session.Add(Constants.LoginSession.LOGIN_SESSION, userToSession);
@@ -86,9 +89,9 @@ namespace ENI
         public static void Loggout()
         {
             HttpContext.Current.Session.Remove(Constants.LoginSession.LOGIN_SESSION);
-            HttpCookie cookie = new HttpCookie(Constants.LoginSession.LOGIN_COOKIE);
-            cookie.Expires = DateTime.Now.AddDays(-1);
-            HttpContext.Current.Response.Cookies.Add(cookie);
+            //HttpCookie cookie = new HttpCookie(Constants.LoginSession.LOGIN_COOKIE);
+            //cookie.Expires = DateTime.Now.AddDays(-1);
+            //HttpContext.Current.Response.Cookies.Add(cookie);
             HttpContext.Current.Response.Redirect("~/login");
         }
 

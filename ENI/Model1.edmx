@@ -12,7 +12,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="30" />
           <Property Name="token" Type="varchar" MaxLength="30" />
-          <Property Name="location" Type="varchar" MaxLength="60" />
+          <Property Name="location" Type="varchar" MaxLength="100" />
           <Property Name="orientation" Type="int" />
           <Property Name="display_size" Type="varchar" MaxLength="15" />
           <Property Name="timetable" Type="text" />
@@ -49,7 +49,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="45" />
           <Property Name="description" Type="tinytext" />
-          <Property Name="is_active" Type="bit" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="report">
           <Key>
@@ -67,7 +67,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="user_role_id" Type="int" />
           <Property Name="name" Type="varchar" MaxLength="30" />
           <Property Name="user_picture_url" Type="varchar" MaxLength="120" />
@@ -79,16 +79,16 @@
           <Property Name="created_by" Type="varchar" MaxLength="30" />
           <Property Name="created_date" Type="datetime" Precision="0" />
           <Property Name="last_modified_date" Type="datetime" Precision="0" />
-          <Property Name="is_active" Type="bit" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
           <Property Name="is_super_user" Type="bit" />
         </EntityType>
         <EntityType Name="user_role">
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="20" />
-          <Property Name="is_active" Type="bit" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
           <Property Name="created_by" Type="varchar" MaxLength="45" />
           <Property Name="created_date" Type="datetime" Precision="0" />
         </EntityType>
@@ -102,7 +102,7 @@
           <Property Name="can_read" Type="bit" />
           <Property Name="can_write" Type="bit" />
           <Property Name="can_delete" Type="bit" />
-          <Property Name="is_active" Type="bit" />
+          <Property Name="is_active" Type="bit" Nullable="false" />
           <Property Name="created_by" Type="varchar" MaxLength="45" />
           <Property Name="created_date" Type="datetime" Precision="0" />
         </EntityType>
@@ -235,7 +235,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="token" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="location" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+          <Property Name="location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="orientation" Type="Int32" />
           <Property Name="display_size" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
           <Property Name="timetable" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
@@ -274,7 +274,7 @@
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="is_active" Type="Boolean" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="user_role_permission" Relationship="eniModel.permission_module" FromRole="modules" ToRole="user_role_permission" />
         </EntityType>
         <EntityType Name="report">
@@ -295,7 +295,7 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="user_role_id" Type="Int32" />
           <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="user_picture_url" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
@@ -307,7 +307,7 @@
           <Property Name="created_by" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="created_date" Type="DateTime" />
           <Property Name="last_modified_date" Type="DateTime" />
-          <Property Name="is_active" Type="Boolean" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
           <Property Name="is_super_user" Type="Boolean" />
           <NavigationProperty Name="user_role" Relationship="eniModel.user_role1" FromRole="user" ToRole="user_role" />
         </EntityType>
@@ -315,9 +315,9 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="is_active" Type="Boolean" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
           <Property Name="created_by" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="created_date" Type="DateTime" />
           <NavigationProperty Name="user" Relationship="eniModel.user_role1" FromRole="user_role" ToRole="user" />
@@ -333,7 +333,7 @@
           <Property Name="can_read" Type="Boolean" />
           <Property Name="can_write" Type="Boolean" />
           <Property Name="can_delete" Type="Boolean" />
-          <Property Name="is_active" Type="Boolean" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
           <Property Name="created_by" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="created_date" Type="DateTime" />
           <NavigationProperty Name="modules" Relationship="eniModel.permission_module" FromRole="user_role_permission" ToRole="modules" />

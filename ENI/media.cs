@@ -22,8 +22,9 @@ namespace ENI
     
         public int id { get; set; }
         public string name { get; set; }
-        public Nullable<int> media_type { get; set; }
-        public Nullable<int> timing { get; set; }
+        public Nullable<int> media_type_id { get; set; }
+        public string media_type { get; set; }
+        public Nullable<int> expose_timing { get; set; }
         public string media_url { get; set; }
         public Nullable<System.DateTime> start_date { get; set; }
         public Nullable<System.DateTime> end_date { get; set; }

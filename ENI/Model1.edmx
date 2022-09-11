@@ -28,8 +28,9 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="30" />
-          <Property Name="media_type" Type="int" />
-          <Property Name="timing" Type="int" />
+          <Property Name="media_type_id" Type="int" />
+          <Property Name="media_type" Type="varchar" MaxLength="15" />
+          <Property Name="expose_timing" Type="int" />
           <Property Name="media_url" Type="varchar" MaxLength="120" />
           <Property Name="start_date" Type="datetime" Precision="0" />
           <Property Name="end_date" Type="datetime" Precision="0" />
@@ -80,7 +81,7 @@
           <Property Name="created_date" Type="datetime" Precision="0" />
           <Property Name="last_modified_date" Type="datetime" Precision="0" />
           <Property Name="is_active" Type="bit" Nullable="false" />
-          <Property Name="is_super_user" Type="bit" />
+          <Property Name="is_super_user" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="user_role">
           <Key>
@@ -201,7 +202,6 @@
       <Schema Namespace="eniModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="eniEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="display" EntityType="eniModel.display" />
-          <EntitySet Name="media" EntityType="eniModel.media" />
           <EntitySet Name="modules" EntityType="eniModel.modules" />
           <EntitySet Name="report" EntityType="eniModel.report" />
           <EntitySet Name="user" EntityType="eniModel.user" />
@@ -209,10 +209,6 @@
           <EntitySet Name="user_role_permission" EntityType="eniModel.user_role_permission" />
           <AssociationSet Name="report_display" Association="eniModel.report_display">
             <End Role="display" EntitySet="display" />
-            <End Role="report" EntitySet="report" />
-          </AssociationSet>
-          <AssociationSet Name="report_media" Association="eniModel.report_media">
-            <End Role="media" EntitySet="media" />
             <End Role="report" EntitySet="report" />
           </AssociationSet>
           <AssociationSet Name="permission_module" Association="eniModel.permission_module">
@@ -226,6 +222,11 @@
           <AssociationSet Name="role_permission" Association="eniModel.role_permission">
             <End Role="user_role" EntitySet="user_role" />
             <End Role="user_role_permission" EntitySet="user_role_permission" />
+          </AssociationSet>
+          <EntitySet Name="media" EntityType="eniModel.media" />
+          <AssociationSet Name="report_media" Association="eniModel.report_media">
+            <End Role="media" EntitySet="media" />
+            <End Role="report" EntitySet="report" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="display">
@@ -245,27 +246,6 @@
           <Property Name="created_date" Type="DateTime" />
           <Property Name="last_modified_date" Type="DateTime" />
           <NavigationProperty Name="report" Relationship="eniModel.report_display" FromRole="display" ToRole="report" />
-        </EntityType>
-        <EntityType Name="media">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="media_type" Type="Int32" />
-          <Property Name="timing" Type="Int32" />
-          <Property Name="media_url" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
-          <Property Name="start_date" Type="DateTime" />
-          <Property Name="end_date" Type="DateTime" />
-          <Property Name="insertions_limit" Type="Int32" />
-          <Property Name="expose_at_all" Type="Boolean" />
-          <Property Name="expose_in_groups" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="expose_in" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
-          <Property Name="is_active" Type="Boolean" Nullable="false" />
-          <Property Name="created_by" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="created_date" Type="DateTime" />
-          <Property Name="last_modified_date" Type="DateTime" />
-          <NavigationProperty Name="report" Relationship="eniModel.report_media" FromRole="media" ToRole="report" />
         </EntityType>
         <EntityType Name="modules">
           <Key>
@@ -308,7 +288,7 @@
           <Property Name="created_date" Type="DateTime" />
           <Property Name="last_modified_date" Type="DateTime" />
           <Property Name="is_active" Type="Boolean" Nullable="false" />
-          <Property Name="is_super_user" Type="Boolean" />
+          <Property Name="is_super_user" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="user_role" Relationship="eniModel.user_role1" FromRole="user" ToRole="user_role" />
         </EntityType>
         <EntityType Name="user_role">
@@ -351,18 +331,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="report_media">
-          <End Type="eniModel.media" Role="media" Multiplicity="0..1" />
-          <End Type="eniModel.report" Role="report" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="report">
-              <PropertyRef Name="media_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="permission_module">
           <End Type="eniModel.modules" Role="modules" Multiplicity="1" />
           <End Type="eniModel.user_role_permission" Role="user_role_permission" Multiplicity="*" />
@@ -399,6 +367,40 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="media">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="media_type_id" Type="Int32" />
+          <Property Name="media_type" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="expose_timing" Type="Int32" />
+          <Property Name="media_url" Type="String" MaxLength="120" FixedLength="false" Unicode="false" />
+          <Property Name="start_date" Type="DateTime" />
+          <Property Name="end_date" Type="DateTime" />
+          <Property Name="insertions_limit" Type="Int32" />
+          <Property Name="expose_at_all" Type="Boolean" />
+          <Property Name="expose_in_groups" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="expose_in" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Boolean" Nullable="false" />
+          <Property Name="created_by" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="created_date" Type="DateTime" />
+          <Property Name="last_modified_date" Type="DateTime" />
+          <NavigationProperty Name="report" Relationship="eniModel.report_media" FromRole="media" ToRole="report" />
+        </EntityType>
+        <Association Name="report_media">
+          <End Type="eniModel.media" Role="media" Multiplicity="0..1" />
+          <End Type="eniModel.report" Role="report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="media">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="report">
+              <PropertyRef Name="media_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -418,27 +420,6 @@
                 <ScalarProperty Name="orientation" ColumnName="orientation" />
                 <ScalarProperty Name="location" ColumnName="location" />
                 <ScalarProperty Name="token" ColumnName="token" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="id" ColumnName="id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="media">
-            <EntityTypeMapping TypeName="eniModel.media">
-              <MappingFragment StoreEntitySet="media">
-                <ScalarProperty Name="last_modified_date" ColumnName="last_modified_date" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="is_active" ColumnName="is_active" />
-                <ScalarProperty Name="expose_in" ColumnName="expose_in" />
-                <ScalarProperty Name="expose_in_groups" ColumnName="expose_in_groups" />
-                <ScalarProperty Name="expose_at_all" ColumnName="expose_at_all" />
-                <ScalarProperty Name="insertions_limit" ColumnName="insertions_limit" />
-                <ScalarProperty Name="end_date" ColumnName="end_date" />
-                <ScalarProperty Name="start_date" ColumnName="start_date" />
-                <ScalarProperty Name="media_url" ColumnName="media_url" />
-                <ScalarProperty Name="timing" ColumnName="timing" />
-                <ScalarProperty Name="media_type" ColumnName="media_type" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
@@ -509,6 +490,28 @@
                 <ScalarProperty Name="can_read" ColumnName="can_read" />
                 <ScalarProperty Name="module_id" ColumnName="module_id" />
                 <ScalarProperty Name="user_role_id" ColumnName="user_role_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="media">
+            <EntityTypeMapping TypeName="eniModel.media">
+              <MappingFragment StoreEntitySet="media">
+                <ScalarProperty Name="last_modified_date" ColumnName="last_modified_date" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="expose_in" ColumnName="expose_in" />
+                <ScalarProperty Name="expose_in_groups" ColumnName="expose_in_groups" />
+                <ScalarProperty Name="expose_at_all" ColumnName="expose_at_all" />
+                <ScalarProperty Name="insertions_limit" ColumnName="insertions_limit" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="media_url" ColumnName="media_url" />
+                <ScalarProperty Name="expose_timing" ColumnName="expose_timing" />
+                <ScalarProperty Name="media_type" ColumnName="media_type" />
+                <ScalarProperty Name="media_type_id" ColumnName="media_type_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>

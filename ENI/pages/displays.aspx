@@ -5,7 +5,7 @@
     
     <div id="page" ng-controller="DisplaysCtrl as ctrl">
         
-        <h3 class="page-title d-print-none">Displays e Totens</h3>
+        <%--<h3 class="page-title d-print-none">Displays e Totens</h3>--%>
 
         <div id="aba" class="navmenu-tabs d-print-none">
             <ul class="nav nav-tabs ml-3">
@@ -39,7 +39,7 @@
                         <div class="card-header">
                             <div class="text-center">                                   
                                 <span class="smaller text-danger mr-2" 
-                                    data-toggle="tooltip" data-placement="top" title="Ultimo contato: 08/09/2022 12:34">
+                                    data-toggle="tooltip" data-placement="top" title="Ultimo sinal: 08/09/2022 12:34" bs-tooltip>
                                     <i class="fas fa-wifi mr-2"></i>Sem conexão
                                 </span>
                             </div>
@@ -53,7 +53,7 @@
 
                         <div class="collapse" id="card_{{item.id}}">
 
-                            <table class="table table-sm mb-0" style="font-size: 0.8em">
+                            <table class="table table-hover mb-0" style="font-size: 0.8em">
                                 <tr>
                                     <th colspan="2">Token</th>
                                 </tr>
@@ -62,11 +62,11 @@
                                 </tr>
                                 <tr>
                                     <th>Resolução</th>
-                                    <th>Tipo</th>
+                                    <th style="width: 50%" class="border-left">Tipo</th>
                                 </tr>
                                 <tr>
                                     <td>{{item.display_size}}</td>
-                                    <td>{{ctrl.tipo_display[item.orientation]}}</td>
+                                    <td class="border-left">{{ctrl.tipo_display[item.orientation]}}</td>
                                 </tr>
 
                                 <tr>
@@ -115,53 +115,55 @@
                     </div>
                     <div class="modal-body p-5">
 
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label>Nome</label>
-                                <input type="text" maxlength="30" ng-model="ctrl.selected_item.name" class="form-control" required />
-                            </div>
+                        <div class="form-custom">
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label>Nome</label>
+                                    <input type="text" maxlength="30" ng-model="ctrl.selected_item.name" class="form-control" required />
+                                </div>
 
-                            <div class="col-md-6">
-                                <label>Token</label>
-                                <input type="text" maxlength="30" ng-model="ctrl.selected_item.token" class="form-control" required />
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label>Orientação</label>
-                                <select class="form-control" ng-model="ctrl.selected_item.orientation" required>                                    
-                                    <option value="1">Paisagem</option>
-                                    <option value="2">Retrato</option>
-                                    <option value="3">Livre</option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label>Dimensões</label>
-                                <input type="text" maxlength="15" ng-model="ctrl.selected_item.display_size" placeholder="1080x1920" class="form-control" required />
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label>Horários</label>
-                                <input type="text" maxlength="15" disabled class="form-control" required />
-                            </div>
-
-                            <div class="col-md-6">
-                                <label>Disponibilidade</label>
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="checkDisponibilidade" ng-model="ctrl.selected_item.is_active" checked="checked" />
-                                    <label class="form-check-label" for="checkDisponibilidade">Ativo</label>
+                                <div class="col-md-6">
+                                    <label>Token</label>
+                                    <input type="text" maxlength="30" ng-model="ctrl.selected_item.token" class="form-control" required />
                                 </div>
                             </div>
-                        </div>
 
-                        <div class="row mb-3">
-                            <div class="col-md-12">
-                                <label>Endereço</label>
-                                <input type="text" maxlength="100"  ng-model="ctrl.selected_item.location" placeholder="Rua, numero, bairro, cep" class="form-control" required />
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label>Orientação</label>
+                                    <select class="form-control" ng-model="ctrl.selected_item.orientation" required>
+                                        <option value="1">Paisagem</option>
+                                        <option value="2">Retrato</option>
+                                        <option value="3">Livre</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label>Dimensões</label>
+                                    <input type="text" maxlength="15" ng-model="ctrl.selected_item.display_size" placeholder="1080x1920" class="form-control" required />
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label>Horários</label>
+                                    <input type="text" maxlength="15" disabled class="form-control" required />
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label>Disponibilidade</label>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="checkDisponibilidade" ng-model="ctrl.selected_item.is_active" checked="checked" />
+                                        <label class="form-check-label" for="checkDisponibilidade">Ativo</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label>Endereço</label>
+                                    <input type="text" maxlength="100" ng-model="ctrl.selected_item.location" placeholder="Rua, numero, bairro, cep" class="form-control" required />
+                                </div>
                             </div>
                         </div>
                             

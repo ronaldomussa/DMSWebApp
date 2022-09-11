@@ -73,9 +73,10 @@ namespace ENI.Controller
                 return "Usuário não logado";
             }
 
-            if (IsLogged.loggedUser.user_role_id.HasValue) // if hasn't then the user is a superuser
+            // only admin and superusers can put a media active;
+            if (!IsLogged.loggedUser.is_super_user)
             {
-                if (IsLogged.loggedUser.user_role_id.Value == 2)
+                if (IsLogged.loggedUser.user_role_id != 2)
                 {
                     Context.Response.StatusCode = 405;
                     return "Ação não permitida para este usuário.";
@@ -113,10 +114,11 @@ namespace ENI.Controller
             }
 
             if(IsLogged.loggedUser.id != id)
-            { 
-                if (IsLogged.loggedUser.user_role_id.HasValue) // if hasn't then the user is a superuser
+            {
+                // only admin and superusers can put a media active;
+                if (!IsLogged.loggedUser.is_super_user)
                 {
-                    if (IsLogged.loggedUser.user_role_id.Value == 2)
+                    if (IsLogged.loggedUser.user_role_id != 2)
                     {
                         Context.Response.StatusCode = 405;
                         return "Ação não permitida para este usuário.";
@@ -153,9 +155,10 @@ namespace ENI.Controller
                 return "Nenhum usuário autenticado para esta ação.";
             }
 
-            if (IsLogged.loggedUser.user_role_id.HasValue) // if hasn't then the user is a superuser
+            // only admin and superusers can put a media active;
+            if (!IsLogged.loggedUser.is_super_user)
             {
-                if(IsLogged.loggedUser.user_role_id.Value == 2)
+                if (IsLogged.loggedUser.user_role_id != 2)
                 {
                     Context.Response.StatusCode = 405;
                     return "Ação não permitida para este usuário.";
@@ -176,13 +179,10 @@ namespace ENI.Controller
                 return "Nenhum usuário autenticado para esta ação.";
             }
 
-            if (IsLogged.loggedUser.is_super_user.HasValue)
+            if (IsLogged.loggedUser.is_super_user)
             {
-                if (IsLogged.loggedUser.is_super_user.Value)
-                {
-                    Context.Response.StatusCode = 405;
-                    return UserController.Remove(id); ;
-                }
+                Context.Response.StatusCode = 405;
+                return UserController.Remove(id); ;
             }
 
             return "Ação não permitida para este usuário.";

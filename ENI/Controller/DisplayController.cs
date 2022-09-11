@@ -70,9 +70,6 @@ namespace ENI.Controller
             }
             else
                 return "Falha ao registrar";
-
-
-            throw new NotImplementedException();
         }
 
         public static string Edit(display editItem)

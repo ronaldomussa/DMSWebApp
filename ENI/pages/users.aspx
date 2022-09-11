@@ -5,7 +5,7 @@
 
     <div id="page" ng-controller="UsersCtrl as ctrl">
         
-        <h3 class="page-title d-print-none">Usuários do sistema</h3>
+        <%--<h3 class="page-title d-print-none">Usuários do sistema</h3>--%>
 
         <div id="aba" class="navmenu-tabs d-print-none">
             <ul class="nav nav-tabs ml-3">

@@ -69,6 +69,16 @@ namespace ENI.Controller
                 return null;
             }
 
+            // only admin and superusers can put a media active;
+            if (!IsLogged.loggedUser.is_super_user)
+            {
+                if (IsLogged.loggedUser.user_role_id != 2)
+                {
+                    Context.Response.StatusCode = 405;
+                    return "Ação não permitida para este usuário.";
+                }
+            }
+
             Context.Response.StatusCode = 400;
 
             int displayId;
@@ -103,9 +113,10 @@ namespace ENI.Controller
                 return null;
             }
 
-            if (IsLogged.loggedUser.user_role_id.HasValue) // if hasn't then the user is a superuser
+            // only admin and superusers can put a media active;
+            if (!IsLogged.loggedUser.is_super_user)
             {
-                if (IsLogged.loggedUser.user_role_id.Value == 2)
+                if (IsLogged.loggedUser.user_role_id != 2)
                 {
                     Context.Response.StatusCode = 405;
                     return "Ação não permitida para este usuário.";
@@ -124,9 +135,10 @@ namespace ENI.Controller
                 return null;
             }
 
-            if (IsLogged.loggedUser.user_role_id.HasValue) // if hasn't then the user is a superuser
+            // only admin and superusers can put a media active;
+            if (!IsLogged.loggedUser.is_super_user)
             {
-                if (IsLogged.loggedUser.user_role_id.Value == 2)
+                if (IsLogged.loggedUser.user_role_id != 2)
                 {
                     Context.Response.StatusCode = 405;
                     return "Ação não permitida para este usuário.";

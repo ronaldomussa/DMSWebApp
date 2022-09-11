@@ -30,6 +30,9 @@ namespace ENI
             routes.MapPageRoute("displays",
                 "displays", "~/pages/displays.aspx", false);
 
+            routes.MapPageRoute("medias",
+                "medias", "~/pages/medias.aspx", false);
+
             routes.MapPageRoute("login",
                 "login", "~/login.aspx", false);
 

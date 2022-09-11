@@ -13,7 +13,7 @@ namespace ENI.Classes
         public string user_picture_url { get; set; }
         public string email { get; set; }
         public string phone { get; set; }
-        public Nullable<bool> is_super_user { get; set; }
+        public bool is_super_user { get; set; }
 
     }
 }

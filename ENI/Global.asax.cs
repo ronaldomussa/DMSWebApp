@@ -24,8 +24,8 @@ namespace ENI
             routes.MapPageRoute("home",
                 "home", "~/index.aspx", false);
 
-            routes.MapPageRoute("usuarios",
-                "usuarios", "~/pages/users.aspx", false);
+            routes.MapPageRoute("users",
+                "users", "~/pages/users.aspx", false);
 
             routes.MapPageRoute("displays",
                 "displays", "~/pages/displays.aspx", false);
@@ -33,12 +33,20 @@ namespace ENI
             routes.MapPageRoute("medias",
                 "medias", "~/pages/medias.aspx", false);
 
+            routes.MapPageRoute("reports",
+                "reports", "~/pages/reports.aspx", false);
+
             routes.MapPageRoute("login",
                 "login", "~/login.aspx", false);
 
+
+            routes.MapPageRoute("teste",
+                "teste", "~/Api/teste.asmx?op=HelloWorld", false);
+
+
         }
 
-            protected void Session_Start(object sender, EventArgs e)
+        protected void Session_Start(object sender, EventArgs e)
         {
 
         }

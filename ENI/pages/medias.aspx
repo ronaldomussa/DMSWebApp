@@ -214,7 +214,7 @@
                              <div class="row mb-3">
                                  <div class="col-md-3">
                                      <label>Limite de inserções</label>
-                                     <input type="number" maxlength="7" class="form-control" required />
+                                     <input type="number" maxlength="7" class="form-control" ng-model="ctrl.selected_item.insertions_limit" />
                                  </div>
 
                                  <div class="col-md-3">

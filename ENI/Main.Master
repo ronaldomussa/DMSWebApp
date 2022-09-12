@@ -62,7 +62,7 @@ WWWWWW__WW___WW__WW__WWWWWW__WWWWWW__WW_________WW______
         <nav id="topheader" class="navbar static-top d-block d-sm-none">
 
             <a class="navbar-brand" href="/home">
-                <img src="/assets/img/logo-vertical.png" />
+                <img style="width: 200px" src="/assets/img/logo-vertical.png" />
             </a>
 
             <button id="btnSidenavebarToggle" class="btn-menu-mobile btn">
@@ -93,6 +93,15 @@ WWWWWW__WW___WW__WW__WWWWWW__WWWWWW__WW_________WW______
                         </a>
                     </li>
 
+                    
+
+                    <li class="nav-item" id="navReports" runat="server">
+                        <a class="nav-link" href="/reports">
+                            <img class="icon" src="assets/img/feed_FILL0_wght300_GRAD0_opsz24.svg" alt="" />
+                            <span class="text-label">Relatórios</span>
+                        </a>
+                    </li>
+
                     <li class="nav-item" id="navMedias" runat="server">
                         <a class="nav-link" href="/medias">
                             <img class="icon" src="assets/img/perm_media_FILL0_wght300_GRAD0_opsz24.svg" alt="" />
@@ -108,7 +117,7 @@ WWWWWW__WW___WW__WW__WWWWWW__WWWWWW__WW_________WW______
                     </li>
 
                     <li class="nav-item" id="navUsers" runat="server">
-                        <a class="nav-link" href="/usuarios">
+                        <a class="nav-link" href="/users">
                             <img class="icon" src="assets/img/group_FILL0_wght300_GRAD0_opsz24.svg" alt="" />
                             <span class="text-label">Usuários</span>
                         </a>

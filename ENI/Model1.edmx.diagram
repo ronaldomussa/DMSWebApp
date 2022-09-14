@@ -4,19 +4,17 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="566a12ce8b01480db285ca3fd96d7d93" Name="Diagram1">
+      <Diagram DiagramId="1c5b17af67ea4c7e8d74c488a4b397f8" Name="Diagram1">
         <EntityTypeShape EntityType="eniModel.display" Width="1.5" PointX="5.75" PointY="8.75" IsExpanded="true" />
         <EntityTypeShape EntityType="eniModel.media" Width="1.5" PointX="5.75" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="eniModel.modules" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="eniModel.report_insertions" Width="1.5" PointX="8" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="eniModel.user" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="eniModel.user_role" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="eniModel.user_role_permission" Width="1.5" PointX="6" PointY="4.125" IsExpanded="true" />
-        <AssociationConnector Association="eniModel.report_display" ManuallyRouted="false" />
-        <AssociationConnector Association="eniModel.report_media" ManuallyRouted="false" />
         <AssociationConnector Association="eniModel.permission_module" ManuallyRouted="false" />
         <AssociationConnector Association="eniModel.user_role1" ManuallyRouted="false" />
         <AssociationConnector Association="eniModel.role_permission" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="eniModel.report_insertions" Width="1.5" PointX="8.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

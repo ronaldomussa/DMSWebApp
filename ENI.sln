@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.32802.440
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ENI", "ENI\ENI.csproj", "{9233F076-9A36-4B5D-B0E4-2B599147EA61}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API_Test", "API_Test\API_Test.csproj", "{421AECDD-4C4F-45CB-83A6-DAD6F1387B40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API_DMS", "API_Test\API_DMS.csproj", "{421AECDD-4C4F-45CB-83A6-DAD6F1387B40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

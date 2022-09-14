@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="eniModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="eniModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="display">
           <Key>
             <PropertyRef Name="id" />
@@ -61,6 +61,7 @@
           <Property Name="media_name" Type="varchar" MaxLength="30" />
           <Property Name="display_id" Type="int" />
           <Property Name="display_token" Type="varchar" MaxLength="30" />
+          <Property Name="display_name" Type="varchar" MaxLength="30" />
           <Property Name="display_location" Type="varchar" MaxLength="100" />
           <Property Name="display_orientation" Type="varchar" MaxLength="15" />
           <Property Name="display_size" Type="varchar" MaxLength="15" />
@@ -124,30 +125,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="report_display">
-          <End Role="display" Type="Self.display" Multiplicity="0..1" />
-          <End Role="report_insertions" Type="Self.report_insertions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="display">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="report_insertions">
-              <PropertyRef Name="display_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="report_media">
-          <End Role="media" Type="Self.media" Multiplicity="0..1" />
-          <End Role="report_insertions" Type="Self.report_insertions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="report_insertions">
-              <PropertyRef Name="media_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="role_permission">
           <End Role="user_role" Type="Self.user_role" Multiplicity="1" />
           <End Role="user_role_permission" Type="Self.user_role_permission" Multiplicity="*" />
@@ -184,14 +161,6 @@
             <End Role="modules" EntitySet="modules" />
             <End Role="user_role_permission" EntitySet="user_role_permission" />
           </AssociationSet>
-          <AssociationSet Name="report_display" Association="Self.report_display">
-            <End Role="display" EntitySet="display" />
-            <End Role="report_insertions" EntitySet="report_insertions" />
-          </AssociationSet>
-          <AssociationSet Name="report_media" Association="Self.report_media">
-            <End Role="media" EntitySet="media" />
-            <End Role="report_insertions" EntitySet="report_insertions" />
-          </AssociationSet>
           <AssociationSet Name="role_permission" Association="Self.role_permission">
             <End Role="user_role" EntitySet="user_role" />
             <End Role="user_role_permission" EntitySet="user_role_permission" />
@@ -201,8 +170,7 @@
             <End Role="user" EntitySet="user" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="eniModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -222,7 +190,6 @@
           <Property Name="created_by" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="created_date" Type="DateTime" />
           <Property Name="last_modified_date" Type="DateTime" />
-          <NavigationProperty Name="report_insertions" Relationship="Self.report_display" FromRole="display" ToRole="report_insertions" />
         </EntityType>
         <EntityType Name="media">
           <Key>
@@ -244,7 +211,6 @@
           <Property Name="created_by" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
           <Property Name="created_date" Type="DateTime" />
           <Property Name="last_modified_date" Type="DateTime" />
-          <NavigationProperty Name="report_insertions" Relationship="Self.report_media" FromRole="media" ToRole="report_insertions" />
         </EntityType>
         <EntityType Name="modules">
           <Key>
@@ -255,25 +221,6 @@
           <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="is_active" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="user_role_permission" Relationship="Self.permission_module" FromRole="modules" ToRole="user_role_permission" />
-        </EntityType>
-        <EntityType Name="report_insertions">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="media_id" Type="Int32" />
-          <Property Name="media_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="display_id" Type="Int32" />
-          <Property Name="display_token" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="display_location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="display_orientation" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="display_size" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="insertions_counted" Type="Int32" />
-          <Property Name="period_start_date" Type="DateTime" />
-          <Property Name="period_end_date" Type="DateTime" />
-          <Property Name="created_date" Type="DateTime" />
-          <NavigationProperty Name="display" Relationship="Self.report_display" FromRole="report_insertions" ToRole="display" />
-          <NavigationProperty Name="media" Relationship="Self.report_media" FromRole="report_insertions" ToRole="media" />
         </EntityType>
         <EntityType Name="user">
           <Key>
@@ -323,30 +270,6 @@
           <NavigationProperty Name="modules" Relationship="Self.permission_module" FromRole="user_role_permission" ToRole="modules" />
           <NavigationProperty Name="user_role" Relationship="Self.role_permission" FromRole="user_role_permission" ToRole="user_role" />
         </EntityType>
-        <Association Name="report_display">
-          <End Role="display" Type="Self.display" Multiplicity="0..1" />
-          <End Role="report_insertions" Type="Self.report_insertions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="display">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="report_insertions">
-              <PropertyRef Name="display_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="report_media">
-          <End Role="media" Type="Self.media" Multiplicity="0..1" />
-          <End Role="report_insertions" Type="Self.report_insertions" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="media">
-              <PropertyRef Name="id" />
-            </Principal>
-            <Dependent Role="report_insertions">
-              <PropertyRef Name="media_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="permission_module">
           <End Role="modules" Type="Self.modules" Multiplicity="1" />
           <End Role="user_role_permission" Type="Self.user_role_permission" Multiplicity="*" />
@@ -383,22 +306,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="eniEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="display" EntityType="Self.display" />
           <EntitySet Name="media" EntityType="Self.media" />
           <EntitySet Name="modules" EntityType="Self.modules" />
-          <EntitySet Name="report_insertions" EntityType="Self.report_insertions" />
           <EntitySet Name="user" EntityType="Self.user" />
           <EntitySet Name="user_role" EntityType="Self.user_role" />
           <EntitySet Name="user_role_permission" EntityType="Self.user_role_permission" />
-          <AssociationSet Name="report_display" Association="Self.report_display">
-            <End Role="display" EntitySet="display" />
-            <End Role="report_insertions" EntitySet="report_insertions" />
-          </AssociationSet>
-          <AssociationSet Name="report_media" Association="Self.report_media">
-            <End Role="media" EntitySet="media" />
-            <End Role="report_insertions" EntitySet="report_insertions" />
-          </AssociationSet>
           <AssociationSet Name="permission_module" Association="Self.permission_module">
             <End Role="modules" EntitySet="modules" />
             <End Role="user_role_permission" EntitySet="user_role_permission" />
@@ -411,13 +325,32 @@
             <End Role="user_role" EntitySet="user_role" />
             <End Role="user_role_permission" EntitySet="user_role_permission" />
           </AssociationSet>
+          <EntitySet Name="report_insertions" EntityType="eniModel.report_insertions" />
         </EntityContainer>
+        <EntityType Name="report_insertions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="media_id" Type="Int32" />
+          <Property Name="media_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="display_id" Type="Int32" />
+          <Property Name="display_token" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="display_name" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="display_location" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="display_orientation" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="display_size" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="insertions_counted" Type="Int32" />
+          <Property Name="period_start_date" Type="DateTime" />
+          <Property Name="period_end_date" Type="DateTime" />
+          <Property Name="created_date" Type="DateTime" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="eniModelStoreContainer" CdmEntityContainer="Entities">
+        <EntityContainerMapping StorageEntityContainer="eniModelStoreContainer" CdmEntityContainer="eniEntities">
           <EntitySetMapping Name="display">
             <EntityTypeMapping TypeName="eniModel.display">
               <MappingFragment StoreEntitySet="display">
@@ -468,24 +401,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="report_insertions">
-            <EntityTypeMapping TypeName="eniModel.report_insertions">
-              <MappingFragment StoreEntitySet="report_insertions">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="media_id" ColumnName="media_id" />
-                <ScalarProperty Name="media_name" ColumnName="media_name" />
-                <ScalarProperty Name="display_id" ColumnName="display_id" />
-                <ScalarProperty Name="display_token" ColumnName="display_token" />
-                <ScalarProperty Name="display_location" ColumnName="display_location" />
-                <ScalarProperty Name="display_orientation" ColumnName="display_orientation" />
-                <ScalarProperty Name="display_size" ColumnName="display_size" />
-                <ScalarProperty Name="insertions_counted" ColumnName="insertions_counted" />
-                <ScalarProperty Name="period_start_date" ColumnName="period_start_date" />
-                <ScalarProperty Name="period_end_date" ColumnName="period_end_date" />
-                <ScalarProperty Name="created_date" ColumnName="created_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="user">
             <EntityTypeMapping TypeName="eniModel.user">
               <MappingFragment StoreEntitySet="user">
@@ -529,6 +444,25 @@
                 <ScalarProperty Name="is_active" ColumnName="is_active" />
                 <ScalarProperty Name="created_by" ColumnName="created_by" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="report_insertions">
+            <EntityTypeMapping TypeName="eniModel.report_insertions">
+              <MappingFragment StoreEntitySet="report_insertions">
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="period_end_date" ColumnName="period_end_date" />
+                <ScalarProperty Name="period_start_date" ColumnName="period_start_date" />
+                <ScalarProperty Name="insertions_counted" ColumnName="insertions_counted" />
+                <ScalarProperty Name="display_size" ColumnName="display_size" />
+                <ScalarProperty Name="display_orientation" ColumnName="display_orientation" />
+                <ScalarProperty Name="display_location" ColumnName="display_location" />
+                <ScalarProperty Name="display_name" ColumnName="display_name" />
+                <ScalarProperty Name="display_token" ColumnName="display_token" />
+                <ScalarProperty Name="display_id" ColumnName="display_id" />
+                <ScalarProperty Name="media_name" ColumnName="media_name" />
+                <ScalarProperty Name="media_id" ColumnName="media_id" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

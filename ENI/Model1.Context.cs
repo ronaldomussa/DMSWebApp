@@ -13,10 +13,10 @@ namespace ENI
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class Entities : DbContext
+    public partial class eniEntities : DbContext
     {
-        public Entities()
-            : base("name=Entities")
+        public eniEntities()
+            : base("name=eniEntities")
         {
         }
     
@@ -28,9 +28,9 @@ namespace ENI
         public virtual DbSet<display> display { get; set; }
         public virtual DbSet<media> media { get; set; }
         public virtual DbSet<modules> modules { get; set; }
-        public virtual DbSet<report_insertions> report_insertions { get; set; }
         public virtual DbSet<user> user { get; set; }
         public virtual DbSet<user_role> user_role { get; set; }
         public virtual DbSet<user_role_permission> user_role_permission { get; set; }
+        public virtual DbSet<report_insertions> report_insertions { get; set; }
     }
 }

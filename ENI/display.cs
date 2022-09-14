@@ -14,12 +14,6 @@ namespace ENI
     
     public partial class display
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public display()
-        {
-            this.report_insertions = new HashSet<report_insertions>();
-        }
-    
         public int id { get; set; }
         public string name { get; set; }
         public string token { get; set; }
@@ -32,8 +26,5 @@ namespace ENI
         public string created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<System.DateTime> last_modified_date { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<report_insertions> report_insertions { get; set; }
     }
 }

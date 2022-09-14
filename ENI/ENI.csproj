@@ -254,6 +254,7 @@
     <Content Include="pages\medias.aspx" />
     <Content Include="pages\reports.aspx" />
     <Content Include="pages\users.aspx" />
+    <Content Include="testes.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -372,6 +373,13 @@
     <Compile Include="report_insertions.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="testes.aspx.cs">
+      <DependentUpon>testes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="testes.aspx.designer.cs">
+      <DependentUpon>testes.aspx</DependentUpon>
+    </Compile>
     <Compile Include="user.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -398,6 +406,7 @@
       <DependentUpon>Model1.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\DmsLinkingMidia - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

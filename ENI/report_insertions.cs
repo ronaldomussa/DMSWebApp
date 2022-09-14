@@ -19,6 +19,7 @@ namespace ENI
         public string media_name { get; set; }
         public Nullable<int> display_id { get; set; }
         public string display_token { get; set; }
+        public string display_name { get; set; }
         public string display_location { get; set; }
         public string display_orientation { get; set; }
         public string display_size { get; set; }
@@ -26,8 +27,5 @@ namespace ENI
         public Nullable<System.DateTime> period_start_date { get; set; }
         public Nullable<System.DateTime> period_end_date { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
-    
-        public virtual display display { get; set; }
-        public virtual media media { get; set; }
     }
 }

@@ -99,14 +99,18 @@ namespace API_Test.Controllers
                             id = (int)item["id"],
                             name = (string)item["name"],
                             media_url = (string)item["media_url"],
+                            media_type = (string)item["media_type"],
                             media_type_id = (Convert.IsDBNull(item["media_type_id"]) ? null : (int?)item["media_type_id"]),
                             expose_timing = (Convert.IsDBNull(item["expose_timing"]) ? null : (int?)item["expose_timing"]),
                             expose_in = (string)item["expose_in"],
                             start_date = (Convert.IsDBNull(item["start_date"]) ? null : (DateTime?)item["start_date"]),
                             end_date = (Convert.IsDBNull(item["end_date"]) ? null : (DateTime?)item["end_date"]),
                             expose_at_all = (Convert.ToBoolean(item["expose_at_all"])),
+                            is_active = (Convert.ToBoolean(item["expose_at_all"])),
                             last_modified_date = (Convert.IsDBNull(item["last_modified_date"]) ? null : (DateTime?)item["last_modified_date"]),
                             insertions_limit = (Convert.IsDBNull(item["insertions_limit"]) ? null : (int?)item["insertions_limit"]),
+                            created_by = (string)item["created_by"],
+                            created_date = (Convert.IsDBNull(item["start_date"]) ? null : (DateTime?)item["start_date"]),
 
                         });
                     }
@@ -126,22 +130,6 @@ namespace API_Test.Controllers
             return new JsonResult(activeMedias);
         }
 
-        // POST api/<PlaylistController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<PlaylistController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<PlaylistController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+       
     }
 }

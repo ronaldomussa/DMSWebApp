@@ -28,7 +28,7 @@ namespace API_Test.Controllers
         [HttpGet("{token}")]
         public JsonResult Get(string token)
         {
-            string query_displays = string.Format("SELECT * FROM display WHERE (is_active = true) AND (token = '{0}')", token);
+            string query_displays = $"SELECT * FROM display WHERE (is_active = true) AND (token = '{token}')";
             string sqlDataSource = _configuration.GetConnectionString("DmsAppCon");
 
             MySqlConnection mycon = new MySqlConnection(sqlDataSource);

@@ -185,11 +185,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="angular\app.module.js" />
+    <Content Include="angular\reports.controller.js" />
     <Content Include="angular\medias.controller.js" />
     <Content Include="angular\displays.controller.js" />
     <Content Include="angular\users.controller.js" />
-    <Content Include="Api\Teste.asmx" />
     <Content Include="assets\css\theme.min.css" />
+    <Content Include="assets\css\_client_theme.css" />
     <Content Include="assets\css\_home.css" />
     <Content Include="assets\css\_login.css" />
     <Content Include="assets\css\_main.css" />
@@ -203,7 +204,6 @@
     <Content Include="assets\img\loader.gif" />
     <Content Include="assets\img\logo-squarebox-m.png" />
     <Content Include="assets\img\logo-squarebox-p.png" />
-    <Content Include="assets\img\logo-squarebox.png" />
     <Content Include="assets\img\logo-vertical.png" />
     <Content Include="assets\img\logout_FILL0_wght300_GRAD0_opsz24.svg" />
     <Content Include="assets\img\perm_media_FILL0_wght300_GRAD0_opsz24.svg" />
@@ -211,6 +211,7 @@
     <Content Include="Controller\DisplayFunctions.asmx" />
     <Content Include="Controller\Displays.asmx" />
     <Content Include="Controller\Medias.asmx" />
+    <Content Include="Controller\ReportInsertions.asmx" />
     <Content Include="Controller\Users.asmx" />
     <Content Include="Global.asax" />
     <Content Include="index.aspx" />
@@ -246,10 +247,11 @@
     <Content Include="node_modules\noty\lib\noty.css" />
     <Content Include="node_modules\noty\lib\noty.min.js" />
     <Content Include="node_modules\noty\lib\themes\sunset.css" />
-    <Content Include="node_modules\popper.js\dist\popper.min.js" />
+    <Content Include="node_modules\popper.js\dist\umd\popper.min.js" />
     <Content Include="node_modules\sweetalert2\dist\sweetalert2.min.css" />
     <Content Include="node_modules\sweetalert2\dist\sweetalert2.min.js" />
     <Content Include="login.aspx" />
+    <Content Include="node_modules\zooming\build\zooming.min.js" />
     <Content Include="pages\displays.aspx" />
     <Content Include="pages\medias.aspx" />
     <Content Include="pages\reports.aspx" />
@@ -258,15 +260,12 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\Teste.asmx.cs">
-      <DependentUpon>Teste.asmx</DependentUpon>
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Classes\Common.cs" />
     <Compile Include="Classes\Constants.cs" />
     <Compile Include="Classes\IsLogged.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
+    <Compile Include="Classes\reportInsertionsDTO.cs" />
     <Compile Include="Classes\userDTO.cs" />
     <Compile Include="Classes\userSessionDTO.cs" />
     <Compile Include="Classes\Util.cs" />
@@ -288,6 +287,11 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Controller\MediasController.cs" />
+    <Compile Include="Controller\ReportInsertions.asmx.cs">
+      <DependentUpon>ReportInsertions.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Controller\ReportInsertionsController.cs" />
     <Compile Include="Controller\UserController.cs" />
     <Compile Include="Controller\Users.asmx.cs">
       <DependentUpon>Users.asmx</DependentUpon>
@@ -370,6 +374,9 @@
     <Compile Include="pages\users.aspx.designer.cs">
       <DependentUpon>users.aspx</DependentUpon>
     </Compile>
+    <Compile Include="report.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="report_insertions.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -417,9 +424,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

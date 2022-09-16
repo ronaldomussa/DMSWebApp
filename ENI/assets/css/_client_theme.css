@@ -1,0 +1,47 @@
+﻿.sidebar .nav-item.current-menu-item .nav-link::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    border-right: 3px solid #C10
+}
+
+.navmenu-tabs .nav-item.active .nav-link {
+    background-color: #FFF;
+    color: #C10;
+    border: 1px solid #ddd;
+    border-bottom: 1px solid #fff
+}
+
+.navmenu-tabs .nav-item .nav-link.active {
+    background-color: #FFF;
+    color: #C10;
+    border: 1px solid #ddd;
+    border-bottom: 1px solid #fff
+}
+
+.page-title {
+    padding: 0;
+    margin: 0;
+    padding-left: 1.5rem;
+    height: 40px;
+    line-height: 40px;
+    z-index: 1000;
+    background-color: #fff;
+    color: #C10;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #eee;
+}
+
+.btn-primary, .bg-primary, .badge-primary {
+    background-color: #C10!important;
+}
+
+.btn-primary {
+    border-color: #C10 !important;
+}
+
+.text-primary {
+    color: #C10
+}

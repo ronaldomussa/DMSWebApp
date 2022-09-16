@@ -26,5 +26,7 @@ namespace ENI
         public string created_by { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public Nullable<System.DateTime> last_modified_date { get; set; }
+        public Nullable<int> playlist_update_interval { get; set; }
+        public Nullable<int> report_update_interval { get; set; }
     }
 }

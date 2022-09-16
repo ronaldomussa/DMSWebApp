@@ -1,13 +1,11 @@
-﻿app = angular.module('app', ['ngFileUpload']);
-
-app.filter("dateConvert", function () {
+﻿app.filter("dateConvert", function () {
 
     var re = /\/Date\(([0-9]*)\)\//;
 
     return function (x) {
         if (x === undefined)
             return;
-        const options = { /*weekday: 'long', */year: 'numeric', month: 'numeric', day: 'numeric' };
+        const options = { month: 'numeric', day: 'numeric' };
 
         var m = x.match(re);
         if (m) {
@@ -18,13 +16,6 @@ app.filter("dateConvert", function () {
     };
 
 });
-
-app.filter("trustUrl", ['$sce', function ($sce) {
-    return function (recordingUrl) {
-        console.log('trustUrl', recordingUrl);
-        return $sce.trustAsResourceUrl(recordingUrl);
-    };
-}]);
 
 app.directive('bsTooltip', function () {
     return {
@@ -41,9 +32,9 @@ app.directive('bsTooltip', function () {
     };
 });
 
-app.controller('MediasCtrl', ['$http', '$filter', 'logged_user', '$scope', 'Upload', '$timeout', MediasCtrl]);
+app.controller('ReportsCtrl', ['$http', '$filter', 'logged_user', ReportsCtrl]);
 
-function MediasCtrl($http, $filter, logged_user, $scope, Upload, $timeout) {
+function ReportsCtrl($http, $filter, logged_user) {
 
     var vm = this;
 
@@ -56,17 +47,17 @@ function MediasCtrl($http, $filter, logged_user, $scope, Upload, $timeout) {
     vm.save_loading = false;
     vm.upload_loading = false;
 
-    $scope.files = {};
-    $scope.errFiles = {};
+    vm.insertions_sum = function (item) {
 
-    const API_URL = '/controller/medias.asmx';
+        let total = 0;
+        for (var i = 0; i < item.length; i++) {
+            total += item[i].insertions_counted;
+        }
+        return total;
 
-    vm.tipo_display = {
-       
-        1: 'Paisagem',
-        2: 'Retrato',
-        3: 'Livre'
     };
+
+    const API_URL = '/controller/reportInsertions.asmx';
 
     vm.crud = {
 
@@ -107,11 +98,8 @@ function MediasCtrl($http, $filter, logged_user, $scope, Upload, $timeout) {
             vm.selected_item.media_type_id = vm.selected_item.media_type_id.toString();
             vm.selected_item.start_date = $filter('dateConvert')(vm.selected_item.start_date);
             vm.selected_item.end_date = $filter('dateConvert')(vm.selected_item.end_date);
-            vm.selected_item.last_modified_date = "";
-            vm.selected_item.created_date = "";
             vm.selected_item.is_new = false;
             vm.selected_item.expose_in = vm.selected_item.expose_in.split(',');
-            delete vm.selected_item["__type"];
 
             vm.refresh_select();
 
@@ -249,130 +237,6 @@ function MediasCtrl($http, $filter, logged_user, $scope, Upload, $timeout) {
         },
 
     };
-
-    $scope.uploadFiles = function (files, errFiles) {
-
-        $scope.files = files;
-        $scope.errFiles = errFiles && errFiles[0];
-
-    };
-
-    vm.remove_temp_media = function () {
-        $scope.files = {};
-        $scope.errFiles = {};
-        vm.selected_item.media_url = '';
-        vm.selected_item.media_type = '';
-    };
-
-    function media_upload() {       
-
-        if ($scope.files && $scope.files.length) {
-
-            vm.save_loading = false;
-            vm.upload_loading = true;
-
-            $scope.files.upload = Upload.upload({
-                url: 'controller/fileupload.ashx',
-                data: { fileUploaded: $scope.files }
-            });
-
-            $scope.files.upload.then(
-                function (response) {
-
-                    $timeout(function () {
-
-                        vm.upload_loading = false;
-                        $scope.files.result = response.data;
-                        vm.selected_item.media_url = response.data.media_url;
-                        vm.selected_item.media_type = response.data.media_type;
-
-                        new Noty({
-                            theme: 'sunset',
-                            type: 'success',
-                            layout: 'topCenter',
-                            timeout: 4000,
-                            text: response.data.message
-                        }).show();
-
-                        media_save();
-
-                        console.log('uploadOnAzure', response.data);
-                    });
-
-                }, function (response) {
-
-                    vm.upload_loading = false;
-
-                    if (response.status > 0)
-                        $scope.errorMsg = response.status + ': ' + response.data;
-
-                    new Noty({
-                        theme: 'sunset',
-                        type: 'error',
-                        layout: 'topRight',
-                        timeout: 4000,
-                        text: response.data.message
-                    }).show();
-
-                    media_save();
-
-                    console.log('uploadOnAzure error', response);
-
-                }, function (evt) {
-                    $scope.files.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-                }
-            );
-        }
-        else
-            media_save(); // save without media file
-
-    }
-
-    function media_save() {
-
-        console.log('init media_save', vm.selected_item);
-
-        vm.save_loading = true;
-
-        let API_METHOD = '/insert';
-
-        if (!vm.selected_item.is_new) // item is edit
-            API_METHOD = '/edit';
-
-        $http({
-            method: 'POST',
-            url: API_URL + API_METHOD,
-            data: vm.selected_item
-        }).then(function (response) {
-
-            vm.save_loading = false;
-            Swal.fire('', response.data.d, 'success');
-            reset();
-            list();
-            $('#modal').modal('hide');
-
-            //console.log('resposta', resposta);
-
-        }, function (resposta) {
-
-            vm.save_loading = false;
-
-            let message = "Verifique os campos e tente novamente";
-            if (resposta.data.d)
-                message = resposta.data.d;
-
-            Swal.fire('Algo errado.', message, 'error');
-            //console.log('resposta erro', resposta);
-
-        });
-    }
-
-    vm.media_preview = function (item) {
-        angular.copy(item, vm.selected_item);
-        console.log('media_preview', vm.selected_item);
-
-        
-    }
 
     function remove_from_db(item) {
 
@@ -538,7 +402,7 @@ function MediasCtrl($http, $filter, logged_user, $scope, Upload, $timeout) {
         }).then(function (resposta) {
 
             vm.display_list = resposta.data.d;
-            vm.refresh_select();
+            //vm.refresh_select();
             //console
             console.log('display_list', resposta);
 
@@ -566,7 +430,7 @@ function MediasCtrl($http, $filter, logged_user, $scope, Upload, $timeout) {
 
     function init() {
         list();
-        display_list()
+        //display_list();
     }
 
     init();

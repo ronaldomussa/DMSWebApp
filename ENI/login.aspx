@@ -13,7 +13,8 @@
     <title>Entre no Portal | ENISOFT</title>
     <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="/node_modules/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" />
-    <link href="/assets/css/_login.css?v=2" rel="stylesheet" />
+    <link href="/assets/css/_login.css" rel="stylesheet" />
+    <link href="/assets/css/_client_theme.css" rel="stylesheet" />
     <link rel="icon" href="/assets/img/favicon.png" type="image/png" />
     <script src="/node_modules/sweetalert2/dist/sweetalert2.min.js"></script>
 

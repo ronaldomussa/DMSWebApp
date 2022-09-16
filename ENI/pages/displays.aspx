@@ -38,9 +38,9 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="text-center">                                   
-                                <span class="smaller text-danger mr-2" 
+                                <span class="smaller text-success mr-2" 
                                     data-toggle="tooltip" data-placement="top" title="Ultimo sinal: 08/09/2022 12:34" bs-tooltip>
-                                    <i class="fas fa-wifi mr-2"></i>Sem conexão
+                                    <i class="fas fa-wifi mr-2"></i>Online
                                 </span>
                             </div>
                         </div>

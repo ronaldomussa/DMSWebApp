@@ -39,6 +39,7 @@ namespace API_Test.Controllers
             List<Models.Media> mediasList = new List<Models.Media>();
 
             Models.ActiveMedias activeMedias = new Models.ActiveMedias();
+            Models.DisplaySetup displaySetup = new Models.DisplaySetup();
             activeMedias.token = token;
             activeMedias.count = 0;
             activeMedias.timestamp = DateTime.Now;
@@ -58,8 +59,21 @@ namespace API_Test.Controllers
                     return new JsonResult(activeMedias);
                 else
                 {
-                    // pegar id do display
+                    // GET ID
                     display_id = (int)displaysTable.Rows[0]["id"];
+                    activeMedias.display_name = displaysTable.Rows[0]["name"].ToString();
+
+                    // GET SETUP INFO
+                    int playlist_update_interval;
+                    int.TryParse(displaysTable.Rows[0]["playlist_update_interval"].ToString(), out playlist_update_interval);
+                    displaySetup.playlist_update_interval = playlist_update_interval;
+
+                    int report_update_interval;
+                    int.TryParse(displaysTable.Rows[0]["report_update_interval"].ToString(), out report_update_interval);
+                    displaySetup.report_update_interval = report_update_interval;
+
+                    displaySetup.timetable = displaysTable.Rows[0]["timetable"].ToString();
+
                 }
 
                 myReader.Close();
@@ -120,6 +134,7 @@ namespace API_Test.Controllers
                 activeMedias.display_id = display_id;
                 activeMedias.count = mediasList.Count;
                 activeMedias.medias = mediasList;
+                activeMedias.display_setup = displaySetup;
 
                 myReader.Close();
 

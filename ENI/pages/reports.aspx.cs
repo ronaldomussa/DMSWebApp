@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace ENI.pages
 {
-    public partial class reports : System.Web.UI.Page
+    public partial class reports : IsLogged
     {
         protected void Page_Load(object sender, EventArgs e)
         {

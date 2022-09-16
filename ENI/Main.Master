@@ -46,6 +46,7 @@ WWWWWW__WW___WW__WW__WWWWWW__WWWWWW__WW_________WW______
     <link href="/node_modules/noty/lib/themes/sunset.css" rel="stylesheet" />
 
     <link href="/assets/css/_main.css" rel="stylesheet" />
+    <link href="/assets/css/_client_theme.css" rel="stylesheet" />
 
     <script src="/node_modules/jquery/dist/jquery.min.js"></script>
     <script src="/node_modules/angular/angular.min.js"></script>

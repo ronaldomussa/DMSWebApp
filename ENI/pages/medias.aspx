@@ -1,10 +1,10 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="medias.aspx.cs" Inherits="ENI.pages.medias" %>
+﻿<%@ Page Title="Midias" Language="C#" MasterPageFile="~/Main.Master" AutoEventWireup="true" CodeBehind="medias.aspx.cs" Inherits="ENI.pages.medias" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="/node_modules/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet" />
     <link href="/node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
     <link href="/node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
 
-    <link href="//amp.azure.net/libs/amp/latest/skins/amp-default/azuremediaplayer.min.css" rel="stylesheet">
+    <link href="//amp.azure.net/libs/amp/latest/skins/amp-default/azuremediaplayer.min.css" rel="stylesheet" />
     <script src="//amp.azure.net/libs/amp/latest/azuremediaplayer.min.js"></script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="Content" runat="server">

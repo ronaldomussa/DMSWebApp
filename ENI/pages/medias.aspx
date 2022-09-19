@@ -226,7 +226,7 @@
                                  </div>
 
                                  <div class="col-md-6">
-                                     <label>Exibir em {{ctrl.selected_item.expose_at_all}}</label>
+                                     <label>Exibir em</label>
 
                                      <div class="form-inline">
                                          <div class="form-check mr-3">
